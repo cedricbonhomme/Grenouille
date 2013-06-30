@@ -3,7 +3,7 @@ import os
 import sys
 
 from setuptools import setup, find_packages
-from grenouille import __version__
+from frog import __version__
 
 
 setup(name='grenouille',

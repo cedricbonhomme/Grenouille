@@ -1,0 +1,15 @@
+# use glob syntax
+syntax: glob
+
+*.elc
+*.pyc
+*~
+
+# Configuration file
+# *.cfg
+
+# Temporary files (vim backups)
+*.swp
+
+# Sphinx _build folder.
+# documentation/_build

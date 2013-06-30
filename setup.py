@@ -6,11 +6,11 @@ from setuptools import setup, find_packages
 from frog import __version__
 
 
-setup(name='grenouille',
+setup(name='frog',
       version=__version__,
       packages=find_packages(),
-      description="Station Meteo",
-      author="Tarek Ziadé",
+      description="Weather station",
+      author="Cédric Bonhomme",
       author_email="kimble.mandel@gmail.com",
       include_package_data=True,
       install_requires=['yoctopuce', 'requests'],

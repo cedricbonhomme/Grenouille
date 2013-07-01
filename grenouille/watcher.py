@@ -1,12 +1,6 @@
 #! /usr/bin/env python
 #-*- coding: utf-8 -*-
 
-__author__ = "Cedric Bonhomme"
-__date__ = "$Date: 2013/07/01 $"
-__revision__ = "$Date: 2013/07/01 $"
-__copyright__ = "Copyright (c) Cedric Bonhomme"
-__license__ = "GPLv3"
-
 from datetime import datetime
 import argparse
 import sys
@@ -42,7 +36,7 @@ def watch_station(delay=3600, verbose=True, loop=False):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Frog watcher.')
+    parser = argparse.ArgumentParser(description='Grenouille watcher.')
 
     parser.add_argument('--version', action='store_true', default=False,
                         help='Displays version and exits.')
@@ -61,7 +55,7 @@ def main():
 
     if args.version:
         yocto = YAPI.GetAPIVersion()
-        print('Frog v%s - Yoctopuce v%s' % (__version__, yocto))
+        print('Grenouille v%s - Yoctopuce v%s' % (__version__, yocto))
         sys.exit(0)
 
     try:

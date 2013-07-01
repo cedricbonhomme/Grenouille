@@ -4,7 +4,12 @@ Frog
 Presentation
 ------------
 
-This project was inspired by the project [Grenouille](https://github.com/tarekziade/grenouille/)
+This project was inspired by the project [Grenouille](https://github.com/tarekziade/grenouille/).
+
+It is intended to be running on a [Raspberry Pi](http://www.raspberrypi.org/)
+with a [Yoctopuce](http://www.yoctopuce.com) sensor.
+
+The station is connected to [OpenWeatherMap](http://openweathermap.org/).
 
 
 Donation

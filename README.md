@@ -4,7 +4,8 @@ Grenouille
 Presentation
 ------------
 
-This project was inspired by the project [Grenouille](https://github.com/tarekziade/grenouille/).
+This project was inspired by the project [Grenouille](https://github.com/tarekziade/grenouille/)
+from [Tarek Ziadé](http://ziade.org/).
 
 It is intended to be running on a [Raspberry Pi](http://www.raspberrypi.org/)
 with a [Yoctopuce](http://www.yoctopuce.com) sensor.

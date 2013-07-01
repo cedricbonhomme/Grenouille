@@ -21,7 +21,7 @@ Thank you!
 
 License
 -------
-[Frog](https://bitbucket.org/cedricbonhomme/grenouille/) is under [GPLv3](http://www.gnu.org/licenses/gpl-3.0.txt) license.
+[Grenouille](https://bitbucket.org/cedricbonhomme/grenouille/) is under [GPLv3](http://www.gnu.org/licenses/gpl-3.0.txt) license.
 
 
 Contact

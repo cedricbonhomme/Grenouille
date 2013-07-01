@@ -9,7 +9,7 @@ This project was inspired by the project [Grenouille](https://github.com/tarekzi
 It is intended to be running on a [Raspberry Pi](http://www.raspberrypi.org/)
 with a [Yoctopuce](http://www.yoctopuce.com) sensor.
 
-The station is connected to [OpenWeatherMap](http://openweathermap.org/).
+The station is connected to [OpenWeatherMap](http://openweathermap.org/), main goal of this *fork*.
 
 
 Donation

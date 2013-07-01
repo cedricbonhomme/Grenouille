@@ -1,5 +1,12 @@
-# -* encoding: utf8 -*-
-#
+#! /usr/bin/env python
+#-*- coding: utf-8 -*-
+
+__author__ = "Cedric Bonhomme"
+__date__ = "$Date: 2013/07/01 $"
+__revision__ = "$Date: 2013/07/01 $"
+__copyright__ = "Copyright (c) Cedric Bonhomme"
+__license__ = "GPLv3"
+
 from yoctopuce.yocto_api import YAPI, YModule, YRefParam
 from yoctopuce.yocto_humidity import YHumidity
 from yoctopuce.yocto_temperature import YTemperature

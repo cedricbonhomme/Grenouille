@@ -1,0 +1,8 @@
+Flask
+Jinja2
+Werkzeug
+distribute
+wsgiref
+requests
+SQLAlchemy
+Flask-SQLAlchemy

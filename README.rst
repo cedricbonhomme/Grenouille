@@ -8,11 +8,14 @@ Presentation
 This project was inspired by the project `Grenouille <https://github.com/tarekziade/grenouille/>`_
 from `Tarek Ziadé <http://ziade.org/>`_.
 
-It is intended to be running on a `Raspberry Pi <http://www.raspberrypi.org/>`_
-with a `Yoctopuce <http://www.yoctopuce.com>`_ sensor.
+The project is divided in two parts:
+    
+* the station: a watcher is running on a `Raspberry Pi <http://www.raspberrypi.org/>`_
+with a `Yoctopuce <http://www.yoctopuce.com>`_ sensor;
+* the web service: a Flask application using PostgreSQL. Moreover, it is possible to
+connect the station to `OpenWeatherMap <http://openweathermap.org/>`_.
 
-The station is connected to `OpenWeatherMap <http://openweathermap.org/>`_, main goal of this *fork*.
-
+A demo instance of the web service is available `here <https://still-scrubland-2213.herokuapp.com/>`.
 
 Usage
 =====
@@ -20,7 +23,7 @@ Usage
 Deployment
 ----------
 
-This application can be deployed on Heroku.
+This application can be deployed on Heroku or on a traditional server.
 
 Deploying the application on Heroku
 '''''''''''''''''''''''''''''''''''

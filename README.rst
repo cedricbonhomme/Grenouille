@@ -10,10 +10,8 @@ from `Tarek Ziadé <http://ziade.org/>`_.
 
 The project is divided in two parts:
     
-* the station: a watcher is running on a `Raspberry Pi <http://www.raspberrypi.org/>`_
-with a `Yoctopuce <http://www.yoctopuce.com>`_ sensor;
-* the web service: a Flask application using PostgreSQL. Moreover, it is possible to
-connect the station to `OpenWeatherMap <http://openweathermap.org/>`_.
+* the station: a watcher is running on a `Raspberry Pi <http://www.raspberrypi.org/>`_ with a `Yoctopuce <http://www.yoctopuce.com>`_ sensor;
+* the web service: a Flask application using PostgreSQL. Moreover, it is possible to connect the station to `OpenWeatherMap <http://openweathermap.org/>`_.
 
 A demo instance of the web service is available `here <https://still-scrubland-2213.herokuapp.com/>`.
 

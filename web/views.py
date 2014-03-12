@@ -44,6 +44,7 @@ def stations_json():
             
     return jsonify(result=result)
 
+@app.route('/', methods=['GET'])
 @app.route('/map/', methods=['GET'])
 def map_view():
     """

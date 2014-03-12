@@ -39,7 +39,12 @@ Deploying the application on a traditional server
 
 .. code:: bash
 
+    $ sudo apt-get install postgresql postgresql-server-dev-9.1 postgresql-client
     $ sudo -u postgres createuser
+    Enter name of role to add: username
+    Shall the new role be a superuser? (y/n) n
+    Shall the new role be allowed to create databases? (y/n) y
+    Shall the new role be allowed to create more new roles? (y/n) n
     $ createdb grenouille
     $ sudo -u postgres createuser
     postgres=# ALTER USER username WITH ENCRYPTED PASSWORD 'password';

@@ -45,6 +45,7 @@ Deploying the application on a traditional server
     postgres=# ALTER USER username WITH ENCRYPTED PASSWORD 'password';
     postgres=# GRANT ALL PRIVILEGES ON DATABASE grenouille TO username;
     postgres=# \q
+    $ export SQLALCHEMY_DATABASE_URI="postgres://username:password@127.0.0.1:5432/grenouille"
 
 Donation
 ========

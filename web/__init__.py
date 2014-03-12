@@ -11,4 +11,4 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = config.SQLALCHEMY_DATABASE_URI
 db = SQLAlchemy(app)
 
-from grenouille import views, models 
+from web import views, models 

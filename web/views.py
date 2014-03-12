@@ -3,4 +3,4 @@
 
 from flask import render_template, jsonify, request
 
-from grenouille import app
+from web import app

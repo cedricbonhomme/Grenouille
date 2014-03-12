@@ -4,5 +4,6 @@ Werkzeug
 distribute
 wsgiref
 requests
+psycopg2
 SQLAlchemy
 Flask-SQLAlchemy

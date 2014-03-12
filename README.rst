@@ -35,7 +35,7 @@ Deploying the application on Heroku
     $ heroku open
 
 Deploying the application on a traditional server
--------------------------------------------------
+'''''''''''''''''''''''''''''''''''''''''''''''''
 
 .. code:: bash
 

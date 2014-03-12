@@ -1,0 +1,96 @@
+{% extends "layout.html" %}
+{% block head%}
+{{super()}}
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <h1>Available stations</h1><i class="icon-warning-sign"></i>
+    </div>
+    <div class="row">
+        <div id="mapdiv"></div>
+    </div>
+</div>
+
+<script type="text/javascript" class="source">
+var stations = [];
+
+$(document).ready(function() {       
+    get_stations();
+})
+
+function get_stations() {
+    $.ajax({
+        type: 'GET',
+        url: "/stations.json/",
+        async:false,
+        success: function(data) {
+            stations = data["result"];
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown){
+            //document.getElementById("geolocation").innerHTML = XMLHttpRequest.responseText;
+        }       
+    }); // ajax closed
+    
+    create_map();
+}
+
+function create_map() {
+    var zoom=12;
+    var popupClass, popupContentHTML;
+    AutoSizeAnchoredMinSize = OpenLayers.Class(OpenLayers.Popup.Anchored, {
+    'autoSize': true,
+    'minSize': new OpenLayers.Size(10,10)
+    });
+
+    map = new OpenLayers.Map("mapdiv" , {
+        controls:[
+            new OpenLayers.Control.Navigation(),
+            new OpenLayers.Control.PanZoomBar(),
+            new OpenLayers.Control.LayerSwitcher(),
+            new OpenLayers.Control.Attribution()]});
+        
+    var osm = new OpenLayers.Layer.OSM();
+    var gsat = new OpenLayers.Layer.Google(
+        "Google Satellite",
+        {type: google.maps.MapTypeId.SATELLITE, numZoomLevels: 22}
+    );
+    var gphy = new OpenLayers.Layer.Google(
+        "Google Physical",
+        {type: google.maps.MapTypeId.TERRAIN, visibility: false}
+    );
+    var gmap = new OpenLayers.Layer.Google(
+        "Google Streets", // the default
+        {numZoomLevels: 20, visibility: false}
+    );
+    var ghyb = new OpenLayers.Layer.Google(
+        "Google Hybrid",
+        {type: google.maps.MapTypeId.HYBRID, numZoomLevels: 22, visibility: false}
+    );  
+    map.addLayers([osm, gsat, gphy, gmap, ghyb]);
+
+    var lonLatCenter = new OpenLayers.LonLat(stations[0]["longitude"], stations[0]["latitude"]).transform(
+                                                new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+    map.setCenter (lonLatCenter, zoom);
+
+
+     
+    stations_location = new OpenLayers.Layer.Markers("Stations");
+    map.addLayer(stations_location);
+    for (station in stations)
+    {
+        var station_marker = new OpenLayers.LonLat(stations[station]["longitude"], stations[station]["latitude"]).transform(
+                    new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+                    popupClass = AutoSizeAnchoredMinSize;
+
+        popupContentHTML = "<p><b>"+stations[station]["name"]+"</b><hr />";
+        addMarker(station_marker, popupClass, popupContentHTML, true, true, "/static/js/img/marker-red.png", stations_location);
+    }
+    
+
+
+
+
+}
+</script>
+{% endblock %}

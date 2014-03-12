@@ -1,0 +1,59 @@
+body {
+    background:#fff1d4 url('../img/pattern.png') repeat left top;
+    color:#645A41;
+    font-family:'Lucida Grande', Arial, sans serif;
+    font-size:12px;
+    line-height:1.75;
+    margin:auto auto;
+    width:90%;
+    height:85%;
+}
+
+a:link {
+    color:#1c73b7;
+    text-decoration:none;
+    outline:0;
+}
+
+a:visited {
+    color:#1c73b7;
+    text-decoration:none;
+    outline:0;
+}
+
+a:active {
+    color:#1c73b7;
+    text-decoration:none;
+    outline:0;
+}
+
+h1 {
+    font-size:x-large;
+    color:#0c85e5;
+}
+
+h2 {
+   font-size:medium;
+}
+
+h3 {
+    font-size:small;
+}
+
+hr {
+    border-style:dotted;
+    height:1px;
+    border-width: 1px 0 0 0;
+    margin:1.45em 0 1.4em;
+    padding:0;
+}
+
+#footer {
+   clear:both;
+   text-align:center;
+   font-size:small
+}
+
+img {
+    border:0;
+}

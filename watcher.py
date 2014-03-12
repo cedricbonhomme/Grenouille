@@ -6,16 +6,13 @@ import argparse
 import sys
 
 from yoctopuce.yocto_api import YAPI
-
-from grenouille.station import Station
-from grenouille.database import WeatherDatabase
-from grenouille import logger, __version__
+from yoctometeo.station import Station
+from yoctometeo import logger, __version__
 
 
 def watch_station(delay=3600, verbose=True, loop=False):
     delay = delay * 1000
     station = Station()
-    db = WeatherDatabase()
 
     def _get_data():
         data = {'date': datetime.now()}
@@ -24,7 +21,6 @@ def watch_station(delay=3600, verbose=True, loop=False):
 
         if verbose:
             print data
-        db.index(data)
 
     if not loop:
         _get_data()

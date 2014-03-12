@@ -9,7 +9,7 @@ CSRF_ENABLED = True
 SECRET_KEY = 'you-will-never-guess'
 
 
-SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
+SQLALCHEMY_DATABASE_URI = os.environ['SQLALCHEMY_DATABASE_URI']
 
 # slow database query threshold (in seconds)
 DATABASE_QUERY_TIMEOUT = 0.5

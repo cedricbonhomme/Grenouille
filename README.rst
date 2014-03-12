@@ -41,7 +41,7 @@ Deploying the application on a traditional server
 
     $ sudo -u postgres createuser
     $ createdb grenouille
-    $ psql
+    $ sudo -u postgres createuser
     postgres=# ALTER USER username WITH ENCRYPTED PASSWORD 'password';
     postgres=# GRANT ALL PRIVILEGES ON DATABASE grenouille TO username;
     postgres=# \q

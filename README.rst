@@ -32,6 +32,8 @@ Deploying the application on Heroku
     $ heroku create
     $ heroku addons:add heroku-postgresql:dev
     $ git push heroku master
+    $ heroku run init
+    $ heroku ps:scale web=1
     $ heroku open
 
 Deploying the application on a traditional server

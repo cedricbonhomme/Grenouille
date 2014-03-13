@@ -41,6 +41,8 @@ Deploying the application on a traditional server
 
 .. code:: bash
 
+    $ git clone https://bitbucket.org/cedricbonhomme/grenouille.git
+    $ cd grenouille
     $ sudo apt-get install postgresql postgresql-server-dev-9.1 postgresql-client
     $ sudo -u postgres createuser
     Enter name of role to add: username

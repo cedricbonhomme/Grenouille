@@ -54,6 +54,10 @@ Deploying the application on a traditional server
     postgres=# GRANT ALL PRIVILEGES ON DATABASE grenouille TO username;
     postgres=# \q
     $ export DATABASE_URL="postgres://username:password@127.0.0.1:5432/grenouille"
+    $ python db_create.py
+    $ python runserver.py
+     * Running on http://0.0.0.0:5000/
+     * Restarting with reloader
 
 Donation
 ========

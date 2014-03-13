@@ -49,7 +49,7 @@ Deploying the application on a traditional server
     Shall the new role be allowed to create databases? (y/n) y
     Shall the new role be allowed to create more new roles? (y/n) n
     $ createdb grenouille
-    $ sudo -u postgres createuser
+    $ sudo -u postgres psql
     postgres=# ALTER USER username WITH ENCRYPTED PASSWORD 'password';
     postgres=# GRANT ALL PRIVILEGES ON DATABASE grenouille TO username;
     postgres=# \q

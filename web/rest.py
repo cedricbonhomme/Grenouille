@@ -1,15 +1,14 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-
 from flask import jsonify
 from web import app, db
 from web.models import User, Station
 
-
 @app.route('/users.json/', methods=['GET'])
 def users_json():
     """
+    This JSON service returns the list of all stations sorted by users.
     """
     users = User.query.all()
     result = []
@@ -27,6 +26,7 @@ def users_json():
 @app.route('/stations.json/', methods=['GET'])
 def stations_json():
     """
+    This JSON service returns the list of all stations.
     """
     users = User.query.all()
     result = []

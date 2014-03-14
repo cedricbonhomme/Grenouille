@@ -73,8 +73,8 @@ def redirect_url(default='map_view'):
 @app.route('/map/', methods=['GET'])
 def map_view():
     """
+    Main view which displays all public stations.
     """
-    #users = User.query.all()
     return render_template('map.html')
 
 @app.route('/profile/', methods=['GET', 'POST'])

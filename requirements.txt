@@ -7,3 +7,6 @@ requests
 psycopg2
 SQLAlchemy
 Flask-SQLAlchemy
+Flask-Login
+Flask-WTF
+WTForms

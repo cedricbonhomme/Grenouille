@@ -15,7 +15,7 @@
 <script type="text/javascript" class="source">
 var stations = [];
 
-$(document).ready(function() {       
+$(document).ready(function() {
     get_stations();
 })
 
@@ -29,9 +29,9 @@ function get_stations() {
         },
         error: function(XMLHttpRequest, textStatus, errorThrown){
             //document.getElementById("geolocation").innerHTML = XMLHttpRequest.responseText;
-        }       
+        }
     }); // ajax closed
-    
+
     create_map();
 }
 
@@ -49,7 +49,7 @@ function create_map() {
             new OpenLayers.Control.PanZoomBar(),
             new OpenLayers.Control.LayerSwitcher(),
             new OpenLayers.Control.Attribution()]});
-        
+
     var osm = new OpenLayers.Layer.OSM();
     var gsat = new OpenLayers.Layer.Google(
         "Google Satellite",
@@ -73,8 +73,6 @@ function create_map() {
                                                 new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
     map.setCenter (lonLatCenter, zoom);
 
-
-     
     stations_location = new OpenLayers.Layer.Markers("Stations");
     map.addLayer(stations_location);
     for (station in stations)
@@ -86,11 +84,6 @@ function create_map() {
         popupContentHTML = "<p><b>"+stations[station]["name"]+"</b><hr />";
         addMarker(station_marker, popupClass, popupContentHTML, true, true, "/static/js/img/marker-red.png", stations_location);
     }
-    
-
-
-
-
 }
 </script>
 {% endblock %}

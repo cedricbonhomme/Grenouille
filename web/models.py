@@ -1,18 +1,22 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import random, base64, hashlib
 from werkzeug import generate_password_hash, check_password_hash
 from flask.ext.login import UserMixin
 from web import db
 
 class User(db.Model, UserMixin):
     """
+    Represent a user.
     """
     id = db.Column(db.Integer, primary_key = True)
     firstname = db.Column(db.String(64), unique = True)
     lastname = db.Column(db.String(64), unique = True)
     email = db.Column(db.String(120), index = True, unique = True)
     pwdhash = db.Column(db.String(120), unique = True)
+    apikey = db.Column(db.String(86), unique = True, default = base64.b64encode(hashlib.sha512( str(random.getrandbits(256)) ).digest(),
+                                                                                random.choice(['rA','aZ','gQ','hH','hG','aR','DD'])).rstrip('=='))
     stations = db.relationship('Station', backref = 'owner', lazy = 'dynamic')
 
     def get_id(self):
@@ -29,6 +33,7 @@ class User(db.Model, UserMixin):
 
 class Station(db.Model):
     """
+    Represent a station.
     """
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(64), default="New station")
@@ -44,6 +49,7 @@ class Station(db.Model):
 
 class Mesure(db.Model):
     """
+    Represent a mesure from a station.
     """
     id = db.Column(db.Integer, primary_key = True)
     temperature = db.Column(db.Float())

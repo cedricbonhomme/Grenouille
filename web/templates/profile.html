@@ -24,6 +24,10 @@
             <br />
             {{ form.submit(class_="btn") }}
         </form>
+        <h2>Your API key</h2>
+        <div class="well">
+            {{ user.apikey }}
+        </div>
     </div>
     <div class="jumbotron">
         <h1>Your stations</h1>
@@ -50,6 +54,7 @@
                     <td>0</td>
                     <td>
                         <a href="/edit_station/{{ station.id }}"><i class="glyphicon glyphicon-edit" title="Edit this station"></i></a>
+                        <a href="/delete_station/{{ station.oid }}"><i class="glyphicon glyphicon-remove" title="Delete this station"></i></a>
                     </td>
             {% endfor %}
             </tbody>

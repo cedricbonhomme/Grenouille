@@ -8,10 +8,12 @@ from web import app, db
 from web.models import User, Station
 from forms import SigninForm, ProfileForm, StationForm
 
-
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+#
+# Management of the user's session.
+#
 @app.before_request
 def before_request():
     g.user = current_user
@@ -36,8 +38,20 @@ def load_user(email):
     # Return an instance of the User model
     return User.query.filter(User.email == email).first()
 
+def redirect_url(default='map_view'):
+    return request.args.get('next') or \
+            request.referrer or \
+            url_for(default)
+
+
+#
+# Views.
+#
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
+    """
+    Log in view.
+    """
     g.user = AnonymousUserMixin()
     form = SigninForm()
 
@@ -53,19 +67,11 @@ def login():
 @login_required
 def logout():
     """
-    Remove the user information from the session.
+    Log out view. Removes the user information from the session.
     """
     logout_user()
     flash("Logged out successfully.", 'success')
     return redirect(url_for('map_view'))
-
-def redirect_url(default='map_view'):
-    return request.args.get('next') or \
-            request.referrer or \
-            url_for(default)
-
-
-
 
 @app.route('/', methods=['GET'])
 @app.route('/map/', methods=['GET'])

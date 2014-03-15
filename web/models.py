@@ -31,7 +31,7 @@ class Station(db.Model):
     """
     """
     id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String(64))
+    name = db.Column(db.String(64), default="New station")
     altitude = db.Column(db.Float())
     latitude = db.Column(db.Float())
     longitude = db.Column(db.Float())

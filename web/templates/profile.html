@@ -27,27 +27,33 @@
     </div>
     <div class="jumbotron">
         <h1>Your stations</h1>
-        {% for form_station in forms_station %}
-            <h2>{{ loop.index }} - {{ form_station.name.data }}</h2>
-            <form action="" method="post" name="savestationform{{ loop.index }}" id="stationform{{ loop.index }}">
-                {{ form_station.hidden_tag() }}
-
-                {{ form_station.name.label }}
-                {{ form_station.name(class_="form-control") }} {% for error in form_station.name.errors %} <span style="color: red;">{{ error }}<br /></span>{% endfor %}
-
-                {{ form_station.altitude.label }}
-                {{ form_station.altitude(class_="form-control") }} {% for error in form_station.altitude.errors %} <span style="color: red;">{{ error }}<br /></span>{% endfor %}
-
-                {{ form_station.latitude.label }}
-                {{ form_station.latitude(class_="form-control") }} {% for error in form_station.latitude.errors %} <span style="color: red;">{{ error }}<br /></span>{% endfor %}
-
-                {{ form_station.longitude.label }}
-                {{ form_station.longitude(class_="form-control") }} {% for error in form_station.longitude.errors %} <span style="color: red;">{{ error }}<br /></span>{% endfor %}
-
-                <br />
-                {{ form_station.submit(class_="btn") }}
-            </form>
-        {% endfor %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Altitude</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th>Mesures sent</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for station in user.stations %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ station.name }}</td>
+                    <td>{{ station.altitude }}</td>
+                    <td>{{ station.latitude }}</td>
+                    <td>{{ station.longitude }}</td>
+                    <td>0</td>
+                    <td>
+                        <a href="/edit_station/{{ station.id }}"><i class="glyphicon glyphicon-edit" title="Edit this station"></i></a>
+                    </td>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
 {% endblock %}

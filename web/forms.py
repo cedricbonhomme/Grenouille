@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from flask.ext.wtf import Form
-from wtforms import TextField, TextAreaField, PasswordField, BooleanField, SubmitField, validators
+from wtforms import TextField, TextAreaField, PasswordField, SubmitField, validators
 
 from web.models import User
 

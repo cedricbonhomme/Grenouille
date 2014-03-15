@@ -109,6 +109,7 @@ def profile():
 @login_required
 def edit_station(station_id=None):
     """
+    Edit a station.
     """
     user = User.query.filter(User.email == g.user.email).first()
     form = StationForm()
@@ -118,6 +119,9 @@ def edit_station(station_id=None):
         if station.id == station_id:
             station = station
             break
+    else:
+        flash('This station does not exist.', 'danger')
+        redirect(redirect_url())
 
     if request.method == 'POST':
         if form.validate():
@@ -125,9 +129,27 @@ def edit_station(station_id=None):
             db.session.commit()
             flash('Station "' + station.name + '" successfully updated', 'success')
         else:
-            flash('Problem', 'danger')
+            flash('Problem with the form.', 'danger')
         return redirect(redirect_url())
 
     if request.method == 'GET':
         form = StationForm(obj=station)
         return render_template('edit_station.html', user=user, station=station, form=form)
+
+@app.route('/delete_station/<int:station_id>', methods=['GET'])
+@login_required
+def delete_station(station_id=None):
+    """
+    Delete a station.
+    """
+    user = User.query.filter(User.email == g.user.email).first()
+
+    for station in user.stations:
+        if station.id == station_id:
+            db.session.delete(station)
+            db.session.commit()
+            flash('Station "' + station.name + '" successfully deleted', 'success')
+            break
+    else:
+        flash('This station does not exist.', 'danger')
+    return redirect(redirect_url())

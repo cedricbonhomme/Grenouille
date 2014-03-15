@@ -6,7 +6,7 @@ from flask.ext.login import LoginManager, login_user, logout_user, login_require
 
 from web import app, db
 from web.models import User, Station
-from forms import SigninForm, ProfileForm
+from forms import SigninForm, ProfileForm, StationForm
 
 
 login_manager = LoginManager()
@@ -67,8 +67,6 @@ def redirect_url(default='map_view'):
 
 
 
-
-
 @app.route('/', methods=['GET'])
 @app.route('/map/', methods=['GET'])
 def map_view():
@@ -85,18 +83,37 @@ def profile():
     """
     user = User.query.filter(User.email == g.user.email).first()
     form = ProfileForm()
+    forms_station = []
+    for _ in user.stations:
+        forms_station.append(StationForm())
 
     if request.method == 'POST':
-        if form.validate() == False:
-            return render_template('profile.html', form=form)
+        if form.validate():
+            form_station = StationForm(obj=user.stations[0])
+            form.populate_obj(user)
+            if form.password.data != "":
+                user.set_password(form.password.data)
+            db.session.commit()
+            flash('User "' + user.firstname + '" successfully updated', 'success')
 
-        form.populate_obj(user)
-        if form.password.data != "":
-            user.set_password(form.password.data)
-        db.session.commit()
-        flash('User "' + user.firstname + '" successfully updated', 'success')
-        return redirect('/profile/')
+        for form_station in forms_station:
+            if form_station.validate():
+                form = ProfileForm(obj=user)
+                for station in user.stations:
+                    if station.name == form_station.name.data:
+                        form_station.populate_obj(station)
+                        db.session.commit()
+                        flash('Station "' + station.name + '" successfully updated', 'success')
+                    break
+
+        if not (form.validate() or any([form_station.validate() for form_station in forms_station])):
+            return render_template('profile.html', form=form, forms_station=forms_station)
+
+        return redirect(url_for('profile'))
 
     if request.method == 'GET':
         form = ProfileForm(obj=user)
-        return render_template('profile.html', form=form)
+        forms_station = []
+        for form_station in user.stations:
+            forms_station.append(StationForm(obj=form_station))
+        return render_template('profile.html', form=form, forms_station=forms_station)

@@ -5,7 +5,8 @@
 {% block content %}
 <div class="container">
     <div class="jumbotron">
-        <form action="" method="post" name="save">
+        <h1>Profile</h1>
+        <form action="" method="post" name="saveprofileform" id="profileform">
             {{ form.hidden_tag() }}
 
             {{ form.firstname.label }}
@@ -23,6 +24,30 @@
             <br />
             {{ form.submit(class_="btn") }}
         </form>
+    </div>
+    <div class="jumbotron">
+        <h1>Your stations</h1>
+        {% for form_station in forms_station %}
+            <h2>{{ loop.index }} - {{ form_station.name.data }}</h2>
+            <form action="" method="post" name="savestationform{{ loop.index }}" id="stationform{{ loop.index }}">
+                {{ form_station.hidden_tag() }}
+
+                {{ form_station.name.label }}
+                {{ form_station.name(class_="form-control") }} {% for error in form_station.name.errors %} <span style="color: red;">{{ error }}<br /></span>{% endfor %}
+
+                {{ form_station.altitude.label }}
+                {{ form_station.altitude(class_="form-control") }} {% for error in form_station.altitude.errors %} <span style="color: red;">{{ error }}<br /></span>{% endfor %}
+
+                {{ form_station.latitude.label }}
+                {{ form_station.latitude(class_="form-control") }} {% for error in form_station.latitude.errors %} <span style="color: red;">{{ error }}<br /></span>{% endfor %}
+
+                {{ form_station.longitude.label }}
+                {{ form_station.longitude(class_="form-control") }} {% for error in form_station.longitude.errors %} <span style="color: red;">{{ error }}<br /></span>{% endfor %}
+
+                <br />
+                {{ form_station.submit(class_="btn") }}
+            </form>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

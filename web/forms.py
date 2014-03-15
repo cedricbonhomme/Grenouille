@@ -51,10 +51,10 @@ class StationForm(Form):
     """
     Station form.
     """
-    name = TextField("First name", [validators.Required("Please enter a name.")])
-    altitude = TextField("Last name", [validators.Required("Please enter an altitude.")])
-    latitude = TextField("Email", [validators.Required("Please enter a latitude.")])
-    longitude = PasswordField("Password", [validators.Required("Please enter a longitude.")])
+    name = TextField("Name", [validators.Required("Please enter a name.")])
+    altitude = TextField("Altitude", [validators.Required("Please enter an altitude.")])
+    latitude = TextField("Latitude", [validators.Required("Please enter a latitude.")])
+    longitude = TextField("Longitude", [validators.Required("Please enter a longitude.")])
     submit = SubmitField("Save")
 
     def __init__(self, *args, **kwargs):

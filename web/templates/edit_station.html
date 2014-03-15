@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block head%}
+{{super()}}
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="jumbotron">
+        <form action="" method="post" name="savestationform" id="stationform">
+            {{ form.hidden_tag() }}
+
+            {{ form.name.label }}
+            {{ form.name(class_="form-control") }} {% for error in form.name.errors %} <span style="color: red;">{{ error }}<br /></span>{% endfor %}
+
+            {{ form.altitude.label }}
+            {{ form.altitude(class_="form-control") }} {% for error in form.altitude.errors %} <span style="color: red;">{{ error }}<br /></span>{% endfor %}
+
+            {{ form.latitude.label }}
+            {{ form.latitude(class_="form-control") }} {% for error in form.latitude.errors %} <span style="color: red;">{{ error }}<br /></span>{% endfor %}
+
+            {{ form.longitude.label }}
+            {{ form.longitude(class_="form-control") }} {% for error in form.longitude.errors %} <span style="color: red;">{{ error }}<br /></span>{% endfor %}
+
+            <br />
+            {{ form.submit(class_="btn") }}
+        </form>
+    </div>
+</div>
+{% endblock %}

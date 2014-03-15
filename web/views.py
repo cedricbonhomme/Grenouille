@@ -98,10 +98,36 @@ def profile():
             db.session.commit()
             flash('User "' + user.firstname + '" successfully updated', 'success')
             return redirect(url_for('profile'))
-
         else:
             return render_template('profile.html', form=form)
 
     if request.method == 'GET':
         form = ProfileForm(obj=user)
         return render_template('profile.html', user=user, form=form)
+
+@app.route('/edit_station/<int:station_id>', methods=['GET', 'POST'])
+@login_required
+def edit_station(station_id=None):
+    """
+    """
+    user = User.query.filter(User.email == g.user.email).first()
+    form = StationForm()
+
+    station = None
+    for station in user.stations:
+        if station.id == station_id:
+            station = station
+            break
+
+    if request.method == 'POST':
+        if form.validate():
+            form.populate_obj(station)
+            db.session.commit()
+            flash('Station "' + station.name + '" successfully updated', 'success')
+        else:
+            flash('Problem', 'danger')
+        return redirect(redirect_url())
+
+    if request.method == 'GET':
+        form = StationForm(obj=station)
+        return render_template('edit_station.html', user=user, station=station, form=form)

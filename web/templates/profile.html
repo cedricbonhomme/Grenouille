@@ -44,10 +44,10 @@
                 </tr>
             </thead>
             <tbody>
-            {% for station in user.stations %}
+            {% for station in user.stations|sort(attribute="name") %}
                 <tr>
                     <td>{{ loop.index }}</td>
-                    <td>{{ station.name }}</td>
+                    <td><a href="/edit_station/{{ station.id }}">{{ station.name }}</a></td>
                     <td>{{ station.altitude }}</td>
                     <td>{{ station.latitude }}</td>
                     <td>{{ station.longitude }}</td>

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from flask import jsonify
-from web import app, db
+from web import app
 from web.models import User, Station
 
 @app.route('/users.json/', methods=['GET'])

@@ -43,11 +43,17 @@ def stations_json():
     users = User.query.all()
     result = []
     for user in users:
-        result.extend([{"id":station.id,
-                        "name":station.name,
-                        "altitude":station.altitude,
-                        "latitude":station.latitude,
-                        "longitude":station.longitude} for station in user.stations])
+        for station in user.stations:
+            try:
+                last_measure_temperature = station.mesures[-1].temperature
+            except:
+                last_measure_temperature = ""
+            result.append({"id":station.id,
+                            "name":station.name,
+                            "altitude":station.altitude,
+                            "latitude":station.latitude,
+                            "longitude":station.longitude,
+                            "temperature":last_measure_temperature})
     return jsonify(result=result)
 
 @app.route('/mesure.json/<int:station_id>/', methods=['POST'])

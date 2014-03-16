@@ -81,7 +81,8 @@ function create_map() {
                     new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
                     popupClass = AutoSizeAnchoredMinSize;
 
-        popupContentHTML = "<p><b>"+stations[station]["name"]+"</b><hr />";
+        popupContentHTML = "<p><b>"+stations[station]["name"]+"</b><hr />" + 
+                            "Temperature: " + stations[station]["temperature"]+"</p>";
         addMarker(station_marker, popupClass, popupContentHTML, true, true, "/static/js/img/marker-red.png", stations_location);
     }
 }

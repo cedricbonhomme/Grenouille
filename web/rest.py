@@ -50,13 +50,17 @@ def stations_json():
                         "longitude":station.longitude} for station in user.stations])
     return jsonify(result=result)
 
-@app.route('/mesure.json/<api_key>/<int:station_id>/', methods=['POST'])
+@app.route('/mesure.json/<int:station_id>/', methods=['POST'])
 @auth.login_required
-def mesure_json(api_key=None, station_id=None):
+def mesure_json(station_id=None):
     """
     Retrieves mesures send by a station.
     """
     user = User.query.filter(User.email == g.user.email).first()
+    try:
+        api_key = request.json["api_key"]
+    except:
+        return jsonify(result="UNAUTHORIZED")
     if user.apikey != api_key:
         return jsonify(result="UNAUTHORIZED")
     for station in user.stations:

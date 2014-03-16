@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block head%}
+{{super()}}
+{% endblock %}
+{% block content %}
+<div class="container">
+    <h1>{{ station.name }}</h1>
+    <h2>Information</h2>
+    <ul>
+        <li>Altitude: {{ station.altitude }}</li>
+        <li>Latitude: {{ station.latitude }}</li>
+        <li>Longitude: {{ station.longitude }}</li>
+    </ul>
+    <h2>Last measures</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Temperature</th>
+                <th>Pression</th>
+                <th>Humidity</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for mesure in station.mesures|sort(attribute="date")|reverse %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ mesure.temperature }}</td>
+                <td>{{ mesure.pression }}</td>
+                <td>{{ mesure.humidity }}</td>
+                <td>{{ mesure.date }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -81,7 +81,7 @@ function create_map() {
                     new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
                     popupClass = AutoSizeAnchoredMinSize;
 
-        popupContentHTML = "<p><b>"+stations[station]["name"]+"</b></p><hr /><p>" + 
+        popupContentHTML = '<p><b><a href="/station_measures/'+stations[station]["id"]+'/">'+stations[station]["name"]+"</a></b></p><hr /><p>" +
                             "Temperature: " + stations[station]["temperature"] + " °C<br />" +
                             "Pression: " + stations[station]["pression"] + " hpa<br />" +
                             "Humidity: " + stations[station]["humidity"] + "  %<br />" +

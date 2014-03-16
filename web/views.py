@@ -105,7 +105,15 @@ def profile():
         form = ProfileForm(obj=user)
         return render_template('profile.html', user=user, form=form)
 
-@app.route('/edit_station/<int:station_id>', methods=['GET', 'POST'])
+@app.route('/station_measures/<int:station_id>/', methods=['GET'])
+def station_measures(station_id=None):
+    """
+    Edit the profile of the user.
+    """
+    station = Station.query.filter(Station.id == station_id).first()
+    return render_template('station_measures.html', station=station)
+
+@app.route('/edit_station/<int:station_id>/', methods=['GET', 'POST'])
 @login_required
 def edit_station(station_id=None):
     """
@@ -136,7 +144,7 @@ def edit_station(station_id=None):
         form = StationForm(obj=station)
         return render_template('edit_station.html', user=user, station=station, form=form)
 
-@app.route('/delete_station/<int:station_id>', methods=['GET'])
+@app.route('/delete_station/<int:station_id>/', methods=['GET'])
 @login_required
 def delete_station(station_id=None):
     """

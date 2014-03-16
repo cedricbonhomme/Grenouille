@@ -68,6 +68,8 @@ Web services
 Send measures
 '''''''''''''
 
+This example shows how to send measures from a station to the platform.
+
 .. code:: python
 
     >>> url

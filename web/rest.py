@@ -45,15 +45,24 @@ def stations_json():
     for user in users:
         for station in user.stations:
             try:
+                last_measure_date = station.mesures[-1].date
                 last_measure_temperature = station.mesures[-1].temperature
+                last_measure_pression = station.mesures[-1].pression
+                last_measure_humidity = station.mesures[-1].humidity
             except:
+                last_measure_date = ""
                 last_measure_temperature = ""
+                last_measure_pression = ""
+                last_measure_humidity = ""
             result.append({"id":station.id,
                             "name":station.name,
                             "altitude":station.altitude,
                             "latitude":station.latitude,
                             "longitude":station.longitude,
-                            "temperature":last_measure_temperature})
+                            "date":last_measure_date,
+                            "temperature":last_measure_temperature,
+                            "pression":last_measure_pression,
+                            "humidity":last_measure_humidity})
     return jsonify(result=result)
 
 @app.route('/mesure.json/', methods=['POST'])

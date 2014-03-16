@@ -5,15 +5,18 @@ Grenouille
 Presentation
 ============
 
-This project was inspired by the project `Grenouille <https://github.com/tarekziade/grenouille/>`_
-from `Tarek Ziadé <http://ziade.org/>`_.
+Grenouille is an online service for weather data.  
+All data can be obtained in JSON and displayed on a map.
+The Web application is based on Flask and uses PostgreSQL.  
+It can be deployed on Heroku. An example of a client for the Yocto-Meteo sensor 
+is provided (inspired from `this code <https://github.com/tarekziade/grenouille/>`_).
 
 The project is divided in two parts:
 
-* the station: a watcher is running on a `Raspberry Pi <http://www.raspberrypi.org/>`_ with a `Yoctopuce <http://www.yoctopuce.com>`_ sensor;
-* the web service: a Flask application using PostgreSQL. Moreover, it is possible to connect the station to `OpenWeatherMap <http://openweathermap.org/>`_.
+* the web service: a Flask application using PostgreSQL with an open API;
+* a proof of concept station: a watcher running on a `Raspberry Pi <http://www.raspberrypi.org/>`_ with a `Yoctopuce <http://www.yoctopuce.com>`_ sensor. Of course you can implement your own client with the API documentation.
 
-A demo instance of the web service is available `here <https://still-scrubland-2213.herokuapp.com/>`_.
+A demo instance is available `here <https://still-scrubland-2213.herokuapp.com/>`_.
 
 Usage
 =====

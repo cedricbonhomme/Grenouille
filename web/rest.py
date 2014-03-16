@@ -56,22 +56,25 @@ def stations_json():
                             "temperature":last_measure_temperature})
     return jsonify(result=result)
 
-@app.route('/mesure.json/<int:station_id>/', methods=['POST'])
+@app.route('/mesure.json/', methods=['POST'])
 @auth.login_required
-def mesure_json(station_id=None):
+def mesure_json():
     """
     Retrieves mesures send by a station.
     """
     user = User.query.filter(User.email == g.user.email).first()
     try:
         api_key = request.json["api_key"]
+        station_id = int(request.json["station_id"])
     except:
         return jsonify(result="UNAUTHORIZED")
     if user.apikey != api_key:
         return jsonify(result="UNAUTHORIZED")
     for station in user.stations:
         if station.id == station_id:
-            new_mesure = Mesure(temperature=request.json["temperature"], humidity=request.json["humidity"], pression=request.json["pression"])
+            new_mesure = Mesure(temperature=request.json["temperature"],
+                                humidity=request.json["humidity"],
+                                pression=request.json["pression"])
             station.mesures.append(new_mesure)
             db.session.commit()
             break

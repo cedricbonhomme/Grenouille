@@ -1,9 +1,21 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask import jsonify
-from web import app
-from web.models import User, Station
+from flask import g, jsonify, request
+from flask.ext.login import login_required
+from web import app, db
+from web.models import User, Station, Mesure
+
+from flask.ext.httpauth import HTTPBasicAuth
+auth = HTTPBasicAuth()
+
+@auth.verify_password
+def verify_password(email, password):
+    user = User.query.filter(User.email == email).first()
+    if not user or not user.check_password(password):
+        return False
+    g.user = user
+    return True
 
 @app.route('/users.json/', methods=['GET'])
 def users_json():
@@ -37,3 +49,22 @@ def stations_json():
                         "latitude":station.latitude,
                         "longitude":station.longitude} for station in user.stations])
     return jsonify(result=result)
+
+@app.route('/mesure.json/<api_key>/<int:station_id>/', methods=['POST'])
+@auth.login_required
+def mesure_json(api_key=None, station_id=None):
+    """
+    Retrieves mesures send by a station.
+    """
+    user = User.query.filter(User.email == g.user.email).first()
+    if user.apikey != api_key:
+        return jsonify(result="UNAUTHORIZED")
+    for station in user.stations:
+        if station.id == station_id:
+            new_mesure = Mesure(temperature=request.json["temperature"], humidity=request.json["humidity"], pression=request.json["pression"])
+            station.mesures.append(new_mesure)
+            db.session.commit()
+            break
+    else:
+        return jsonify(result="BAD STATION ID")
+    return jsonify(result="OK")

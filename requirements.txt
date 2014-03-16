@@ -9,4 +9,5 @@ SQLAlchemy
 Flask-SQLAlchemy
 Flask-Login
 Flask-WTF
+Flask-HTTPAuth
 WTForms

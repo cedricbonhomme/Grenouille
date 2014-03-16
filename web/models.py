@@ -56,6 +56,6 @@ class Mesure(db.Model):
     temperature = db.Column(db.Float())
     pression = db.Column(db.Float())
     humidity = db.Column(db.Float())
-    date = db.Column(db.DateTime(), default=datetime.now())
+    date = db.Column(db.DateTime(), default=datetime.now)
 
     station_id = db.Column(db.Integer, db.ForeignKey('station.id'))

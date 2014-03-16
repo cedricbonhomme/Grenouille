@@ -61,6 +61,29 @@ Deploying the application on a traditional server
      * Running on http://0.0.0.0:5000/
      * Restarting with reloader
 
+
+Web services
+------------
+
+Send measures
+'''''''''''''
+
+.. code:: python
+
+    >>> url
+    "https://still-scrubland-2213.herokuapp.com/mesure.json/"
+    >>> headers
+    {'Content-type': 'application/json', 'Accept': 'application/json'}
+    >>> data
+    {'pression': 1023, 'api_key': 'VDZCF0aa1nUazxbCX2q01FKRWALxdIzCMNmg', 'temperature': 20, 'station_id': 2, 'humidity': 81}
+    >>> r = requests.post(url, data=json.dumps(data), headers=headers, auth=('your-email@example.com', 'password'))
+    >>> print r.content
+    {
+    "result": "OK"
+    }
+
+
+
 Donation
 ========
 

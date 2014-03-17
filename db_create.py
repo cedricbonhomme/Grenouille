@@ -62,7 +62,7 @@ role_admin = Role(name="admin")
 role_user = Role(name="user")
 
 user1 = User(firstname="admin", lastname="admin", email="admin@mail.com", pwdhash=generate_password_hash("password"))
-user2 = User(firstname="John", lastname="Doe", email="john.doel@mail.com", pwdhash=generate_password_hash("password"))
+user2 = User(firstname="John", lastname="Doe", email="john.doe@mail.com", pwdhash=generate_password_hash("password"))
 
 user1.roles.extend([role_admin, role_user])
 user2.roles.append(role_user)

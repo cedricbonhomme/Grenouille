@@ -146,7 +146,6 @@ def station(station_id=None):
 @app.route('/edit_station/', methods=['GET', 'POST'])
 @app.route('/edit_station/<int:station_id>/', methods=['GET', 'POST'])
 @login_required
-@admin_permission.require()
 def edit_station(station_id=None):
     """
     Add or edit a station.

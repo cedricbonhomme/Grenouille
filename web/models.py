@@ -41,7 +41,7 @@ class Station(db.Model):
     altitude = db.Column(db.Float())
     latitude = db.Column(db.Float())
     longitude = db.Column(db.Float())
-    mesures = db.relationship('Measure', backref = 'station', lazy = 'dynamic')
+    measures = db.relationship('Measure', backref = 'station', lazy = 'dynamic')
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 

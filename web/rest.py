@@ -81,7 +81,7 @@ def measure_json():
         return jsonify(result="UNAUTHORIZED")
     for station in user.stations:
         if station.id == station_id:
-            new_measure = Mesure(temperature=request.json["temperature"],
+            new_measure = Measure(temperature=request.json["temperature"],
                                 humidity=request.json["humidity"],
                                 pression=request.json["pression"])
             station.measures.append(new_measure)

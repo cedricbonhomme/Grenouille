@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+{% block head%}
+{{super()}}
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            <h1>{{ station.name }}</h1>
+            <h2>Information</h2>
+            <ul>
+                <li>Altitude: {{ station.altitude }}</li>
+                <li>Latitude: {{ station.latitude }}</li>
+                <li>Longitude: {{ station.longitude }}</li>
+            </ul>
+        </div>
+        <div class="col-md-7">
+            <div id="basicMap" style="height:300px"></div>
+        </div>
+    </div>
+    <h2>Last measures</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Temperature</th>
+                <th>Pression</th>
+                <th>Humidity</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for measure in station.measures|sort(attribute="date")|reverse %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ measure.temperature }}</td>
+                <td>{{ measure.pression }}</td>
+                <td>{{ measure.humidity }}</td>
+                <td>{{ measure.date }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript" class="source">
+$(document).ready(function() {
+    init();
+})
+
+function init() {
+    map = new OpenLayers.Map("basicMap");
+    var mapnik = new OpenLayers.Layer.OSM();
+    var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
+    var toProjection = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
+    var position = new OpenLayers.LonLat({{ station.longitude }}, {{ station.latitude }}).transform(fromProjection, toProjection);
+    var zoom = 15;
+
+    map.addLayer(mapnik);
+
+    var position = new OpenLayers.LonLat({{ station.longitude }}, {{ station.latitude }}).transform(fromProjection, toProjection);
+    var markers = new OpenLayers.Layer.Markers( "Markers" );
+    map.addLayer(markers);
+    markers.addMarker(new OpenLayers.Marker(position));
+
+    map.setCenter(position, zoom);
+}
+</script>
+{% endblock %}

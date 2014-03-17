@@ -5,6 +5,7 @@
 {% block content %}
 <div class="container">
     <div class="jumbotron">
+        <h2>{{ message|safe }}</h1>
         <form action="" method="post" name="savestationform" id="stationform">
             {{ form.hidden_tag() }}
 

@@ -113,6 +113,7 @@ def station(station_id=None):
     station = Station.query.filter(Station.id == station_id).first()
     return render_template('station.html', station=station)
 
+@app.route('/edit_station/', methods=['GET', 'POST'])
 @app.route('/edit_station/<int:station_id>/', methods=['GET', 'POST'])
 @login_required
 def edit_station(station_id=None):
@@ -122,27 +123,42 @@ def edit_station(station_id=None):
     user = User.query.filter(User.email == g.user.email).first()
     form = StationForm()
 
-    station = None
-    for station in user.stations:
-        if station.id == station_id:
-            station = station
-            break
-    else:
-        flash('This station does not exist.', 'danger')
-        redirect(redirect_url())
+    if station_id != None:
+        station = None
+        for station in user.stations:
+            if station.id == station_id:
+                station = station
+                break
+        else:
+            flash('This station does not exist.', 'danger')
+            return redirect(redirect_url())
 
     if request.method == 'POST':
         if form.validate():
-            form.populate_obj(station)
+            if station_id != None:
+                form.populate_obj(station)
+                flash('Station "' + station.name + '" successfully updated', 'success')
+            else:
+                new_station = Station(name=form.name.data,
+                                        altitude=form.altitude.data,
+                                        latitude=form.latitude.data,
+                                        longitude=form.longitude.data,
+                                        user_id=user.id)
+                user.stations.append(new_station)
+                flash('Station "' + new_station.name + '" successfully created', 'success')
             db.session.commit()
-            flash('Station "' + station.name + '" successfully updated', 'success')
         else:
             flash('Problem with the form.', 'danger')
         return redirect(redirect_url())
 
     if request.method == 'GET':
-        form = StationForm(obj=station)
-        return render_template('edit_station.html', user=user, station=station, form=form)
+        if station_id != None:
+            form = StationForm(obj=station)
+            message = "Edit the station <i>" + station.name + "</i>"
+        else:
+            form = StationForm()
+            message="Add a new station"
+        return render_template('edit_station.html', user=user, form=form, message=message)
 
 @app.route('/delete_station/<int:station_id>/', methods=['GET'])
 @login_required

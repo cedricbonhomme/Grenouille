@@ -41,16 +41,16 @@ class Station(db.Model):
     altitude = db.Column(db.Float())
     latitude = db.Column(db.Float())
     longitude = db.Column(db.Float())
-    mesures = db.relationship('Mesure', backref = 'station', lazy = 'dynamic')
+    mesures = db.relationship('Measure', backref = 'station', lazy = 'dynamic')
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
         return '<Station %r>' % (self.name)
 
-class Mesure(db.Model):
+class Measure(db.Model):
     """
-    Represent a mesure from a station.
+    Represent a measure from a station.
     """
     id = db.Column(db.Integer, primary_key = True)
     temperature = db.Column(db.Float())

@@ -53,7 +53,7 @@
                     <td>{{ station.longitude }}</td>
                     <td>{{ station.mesures.all()|count }}</td>
                     <td>
-                        <a href="/station_measures/{{ station.id }}"><i class="glyphicon glyphicon-th-list" title="Measures"></i></a>
+                        <a href="/station/{{ station.id }}"><i class="glyphicon glyphicon-th-list" title="Measures"></i></a>
                         <a href="/edit_station/{{ station.id }}"><i class="glyphicon glyphicon-edit" title="Edit this station"></i></a>
                         <a href="/delete_station/{{ station.id }}"><i class="glyphicon glyphicon-remove" title="Delete this station"></i></a>
                     </td>

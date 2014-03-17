@@ -105,13 +105,13 @@ def profile():
         form = ProfileForm(obj=user)
         return render_template('profile.html', user=user, form=form)
 
-@app.route('/station_measures/<int:station_id>/', methods=['GET'])
-def station_measures(station_id=None):
+@app.route('/station/<int:station_id>/', methods=['GET'])
+def station(station_id=None):
     """
     Edit the profile of the user.
     """
     station = Station.query.filter(Station.id == station_id).first()
-    return render_template('station_measures.html', station=station)
+    return render_template('station.html', station=station)
 
 @app.route('/edit_station/<int:station_id>/', methods=['GET', 'POST'])
 @login_required

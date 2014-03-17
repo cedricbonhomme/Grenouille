@@ -4,7 +4,7 @@
 from flask import g, jsonify, request
 from flask.ext.login import login_required
 from web import app, db
-from web.models import User, Station, Mesure
+from web.models import User, Station, Measure
 
 from flask.ext.httpauth import HTTPBasicAuth
 auth = HTTPBasicAuth()
@@ -45,10 +45,10 @@ def stations_json():
     for user in users:
         for station in user.stations:
             try:
-                last_measure_date = station.mesures[-1].date
-                last_measure_temperature = station.mesures[-1].temperature
-                last_measure_pression = station.mesures[-1].pression
-                last_measure_humidity = station.mesures[-1].humidity
+                last_measure_date = station.measures[-1].date
+                last_measure_temperature = station.measures[-1].temperature
+                last_measure_pression = station.measures[-1].pression
+                last_measure_humidity = station.measures[-1].humidity
             except:
                 last_measure_date = ""
                 last_measure_temperature = ""
@@ -65,11 +65,11 @@ def stations_json():
                             "humidity":last_measure_humidity})
     return jsonify(result=result)
 
-@app.route('/mesure.json/', methods=['POST'])
+@app.route('/measure.json/', methods=['POST'])
 @auth.login_required
-def mesure_json():
+def measure_json():
     """
-    Retrieves mesures send by a station.
+    Retrieves measures send by a station.
     """
     user = User.query.filter(User.email == g.user.email).first()
     try:
@@ -81,10 +81,10 @@ def mesure_json():
         return jsonify(result="UNAUTHORIZED")
     for station in user.stations:
         if station.id == station_id:
-            new_mesure = Mesure(temperature=request.json["temperature"],
+            new_measure = Mesure(temperature=request.json["temperature"],
                                 humidity=request.json["humidity"],
                                 pression=request.json["pression"])
-            station.mesures.append(new_mesure)
+            station.measures.append(new_measure)
             db.session.commit()
             break
     else:

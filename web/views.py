@@ -1,12 +1,17 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask import render_template, jsonify, request, flash, session, url_for, redirect, g
+from flask import render_template, jsonify, request, flash, session, url_for, redirect, g, current_app
 from flask.ext.login import LoginManager, login_user, logout_user, login_required, current_user, AnonymousUserMixin
+from flask.ext.principal import Principal, Identity, AnonymousIdentity, identity_changed, identity_loaded, Permission, RoleNeed, UserNeed
 
 from web import app, db
 from web.models import User, Station
 from forms import SigninForm, ProfileForm, StationForm
+
+Principal(app)
+# Create a permission with a single Need, in this case a RoleNeed.
+admin_permission = Permission(RoleNeed('admin'))
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -14,6 +19,21 @@ login_manager.init_app(app)
 #
 # Management of the user's session.
 #
+@identity_loaded.connect_via(app)
+def on_identity_loaded(sender, identity):
+    # Set the identity user object
+    identity.user = current_user
+
+    # Add the UserNeed to the identity
+    if hasattr(current_user, 'id'):
+        identity.provides.add(UserNeed(current_user.id))
+
+    # Assuming the User model has a list of roles, update the
+    # identity with the roles that the user provides
+    if hasattr(current_user, 'roles'):
+        for role in current_user.roles:
+            identity.provides.add(RoleNeed(role.name))
+
 @app.before_request
 def before_request():
     g.user = current_user
@@ -59,6 +79,7 @@ def login():
         user = User.query.filter(User.email == form.email.data).first()
         login_user(user)
         g.user = user
+        identity_changed.send(current_app._get_current_object(), identity=Identity(user.id))
         flash("Logged in successfully.", 'success')
         return redirect(url_for('profile'))
     return render_template('login.html', form=form)
@@ -69,7 +90,16 @@ def logout():
     """
     Log out view. Removes the user information from the session.
     """
+    # Remove the user information from the session
     logout_user()
+
+    # Remove session keys set by Flask-Principal
+    for key in ('identity.name', 'identity.auth_type'):
+        session.pop(key, None)
+
+    # Tell Flask-Principal the user is anonymous
+    identity_changed.send(current_app._get_current_object(), identity=AnonymousIdentity())
+
     flash("Logged out successfully.", 'success')
     return redirect(url_for('map_view'))
 
@@ -116,6 +146,7 @@ def station(station_id=None):
 @app.route('/edit_station/', methods=['GET', 'POST'])
 @app.route('/edit_station/<int:station_id>/', methods=['GET', 'POST'])
 @login_required
+@admin_permission.require()
 def edit_station(station_id=None):
     """
     Add or edit a station.
@@ -177,3 +208,12 @@ def delete_station(station_id=None):
     else:
         flash('This station does not exist.', 'danger')
     return redirect(redirect_url())
+
+@app.route('/admin/', methods=['GET', 'POST'])
+@login_required
+@admin_permission.require()
+def admin():
+    """
+    Administration view.
+    """
+    return render_template('admin.html')

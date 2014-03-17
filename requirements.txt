@@ -8,6 +8,7 @@ psycopg2
 SQLAlchemy
 Flask-SQLAlchemy
 Flask-Login
+Flask-Principal
 Flask-WTF
 Flask-HTTPAuth
 WTForms

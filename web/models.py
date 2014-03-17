@@ -16,7 +16,8 @@ class User(db.Model, UserMixin):
     lastname = db.Column(db.String(64), unique = True)
     email = db.Column(db.String(120), index = True, unique = True)
     pwdhash = db.Column(db.String(120), unique = True)
-    apikey = db.Column(db.String(86), unique = True, default = base64.b64encode(hashlib.sha512( str(random.getrandbits(256)) ).digest(),
+    roles = db.relationship('Role', backref = 'user', lazy = 'dynamic')
+    apikey = db.Column(db.String(86), default = base64.b64encode(hashlib.sha512( str(random.getrandbits(256)) ).digest(),
                                                                                 random.choice(['rA','aZ','gQ','hH','hG','aR','DD'])).rstrip('=='))
     stations = db.relationship('Station', backref = 'owner', lazy = 'dynamic')
 
@@ -31,6 +32,15 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return '<User %r>' % (self.firstname)
+
+class Role(db.Model):
+    """
+    Represent a role.
+    """
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String(10), unique = True)
+
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 class Station(db.Model):
     """

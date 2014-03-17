@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from flask import flash
 from flask.ext.wtf import Form
 from wtforms import TextField, TextAreaField, PasswordField, SubmitField, validators
 
@@ -26,7 +27,8 @@ class SigninForm(Form):
         if user and user.check_password(self.password.data):
             return True
         else:
-            self.email.errors.append("Invalid e-mail or password")
+            flash('Invalid email or password', 'danger')
+            #self.email.errors.append("Invalid email or password")
             return False
 
 class ProfileForm(Form):

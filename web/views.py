@@ -118,7 +118,7 @@ def station(station_id=None):
 @login_required
 def edit_station(station_id=None):
     """
-    Edit a station.
+    Add or edit a station.
     """
     user = User.query.filter(User.email == g.user.email).first()
     form = StationForm()

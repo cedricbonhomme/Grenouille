@@ -47,7 +47,7 @@
             {% for station in user.stations|sort(attribute="name") %}
                 <tr>
                     <td>{{ loop.index }}</td>
-                    <td><a href="/edit_station/{{ station.id }}">{{ station.name }}</a></td>
+                    <td><a href="/station/{{ station.id }}">{{ station.name }}</a></td>
                     <td>{{ station.altitude }}</td>
                     <td>{{ station.latitude }}</td>
                     <td>{{ station.longitude }}</td>
@@ -60,6 +60,7 @@
             {% endfor %}
             </tbody>
         </table>
+        <a href="/edit_station/" class="btn btn-default">Add a new station</a>
     </div>
 </div>
 {% endblock %}

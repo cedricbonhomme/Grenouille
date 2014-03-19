@@ -1,9 +1,10 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import pycountry
 from flask import flash
 from flask.ext.wtf import Form
-from wtforms import TextField, TextAreaField, PasswordField, SubmitField, validators
+from wtforms import TextField, TextAreaField, SelectField, PasswordField, SubmitField, validators
 
 from web.models import User
 
@@ -54,6 +55,7 @@ class StationForm(Form):
     Station form.
     """
     name = TextField("Name", [validators.Required("Please enter a name.")])
+    country = SelectField(u'Country', choices=[(country.alpha2, country.name) for country in  list(pycountry.countries)])
     altitude = TextField("Altitude", [validators.Required("Please enter an altitude.")])
     latitude = TextField("Latitude", [validators.Required("Please enter a latitude.")])
     longitude = TextField("Longitude", [validators.Required("Please enter a longitude.")])

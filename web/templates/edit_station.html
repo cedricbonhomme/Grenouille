@@ -12,6 +12,9 @@
             {{ form.name.label }}
             {{ form.name(class_="form-control") }} {% for error in form.name.errors %} <span style="color: red;">{{ error }}<br /></span>{% endfor %}
 
+            {{ form.country.label }}
+            {{ form.country(class_="form-control") }} {% for error in form.country.errors %} <span style="color: red;">{{ error }}<br /></span>{% endfor %}
+
             {{ form.altitude.label }}
             {{ form.altitude(class_="form-control") }} {% for error in form.altitude.errors %} <span style="color: red;">{{ error }}<br /></span>{% endfor %}
 

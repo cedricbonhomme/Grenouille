@@ -5,6 +5,7 @@ distribute
 wsgiref
 requests
 psycopg2
+pycountry
 SQLAlchemy
 Flask-SQLAlchemy
 Flask-Login

@@ -48,6 +48,7 @@ class Station(db.Model):
     """
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(64), default="New station")
+    country = db.Column(db.String(64), default="France")
     altitude = db.Column(db.Float())
     latitude = db.Column(db.Float())
     longitude = db.Column(db.Float())

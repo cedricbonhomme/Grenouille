@@ -16,14 +16,10 @@
 var stations = [];
 
 $(document).ready(function() {
-    getLocation();
+    get_stations();
 })
 
-function init(position) {
-    get_stations(position);
-}
-
-function get_stations(position) {
+function get_stations() {
     $.ajax({
         type: 'GET',
         url: "/weather.json/",
@@ -36,11 +32,11 @@ function get_stations(position) {
         }
     }); // ajax closed
 
-    create_map(position);
+    create_map();
 }
 
-function create_map(position) {
-    var zoom=12;
+function create_map() {
+    var zoom=3;
     var popupClass, popupContentHTML;
     AutoSizeAnchoredMinSize = OpenLayers.Class(OpenLayers.Popup.Anchored, {
     'autoSize': true,
@@ -48,6 +44,7 @@ function create_map(position) {
     });
 
     map = new OpenLayers.Map("mapdiv" , {
+        units : 'km',
         controls:[
             new OpenLayers.Control.Navigation(),
             new OpenLayers.Control.PanZoomBar(),
@@ -70,10 +67,10 @@ function create_map(position) {
     var ghyb = new OpenLayers.Layer.Google(
         "Google Hybrid",
         {type: google.maps.MapTypeId.HYBRID, numZoomLevels: 22, visibility: false}
-    );  
+    );
     map.addLayers([osm, gsat, gphy, gmap, ghyb]);
 
-    var lonLatCenter = new OpenLayers.LonLat(position.coords.longitude, position.coords.latitude).transform(
+    var lonLatCenter = new OpenLayers.LonLat(0.0, 42.0).transform(
                                                 new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
     map.setCenter (lonLatCenter, zoom);
 

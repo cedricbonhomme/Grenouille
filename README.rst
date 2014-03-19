@@ -16,7 +16,7 @@ The project is divided in two parts:
 * the web service: a Flask application using PostgreSQL with an open API;
 * a proof of concept station: a watcher running on a `Raspberry Pi <http://www.raspberrypi.org/>`_ with a `Yoctopuce <http://www.yoctopuce.com>`_ sensor. Of course you can implement your own client with the API documentation.
 
-A demo instance is available `here <https://still-scrubland-2213.herokuapp.com/>`_.
+A demo instance is available `here <https://petite-grenouille.herokuapp.com/>`_.
 
 Usage
 =====
@@ -75,7 +75,7 @@ This example shows how to send measures from a station to the platform.
 
 .. code:: python
 
-    >>> url = "https://still-scrubland-2213.herokuapp.com/measure.json/"
+    >>> url = "https://petite-grenouille.herokuapp.com/measure.json/"
     >>> headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
     >>> data = {'pression': 1023, 'api_key': 'VDZCF0aa1nUazxbCX2q01FKRWALxdIzCMNmg', 'temperature': 20, 'station_id': 2, 'humidity': 81}
     >>> r = requests.post(url, data=json.dumps(data), headers=headers, auth=('your-email@example.com', 'password'))

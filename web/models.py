@@ -62,11 +62,17 @@ class Station(db.Model):
 class Measure(db.Model):
     """
     Represent a measure from a station.
+    Units of measure:
+    - temperature: °C;
+    - pression: hpa;
+    - humidity: percent;
+    - wind: m/s.
     """
     id = db.Column(db.Integer, primary_key = True)
     temperature = db.Column(db.Float())
     pression = db.Column(db.Float())
     humidity = db.Column(db.Float())
+    wind = db.Column(db.Float())
     date = db.Column(db.DateTime(), default=datetime.now)
 
     station_id = db.Column(db.Integer, db.ForeignKey('station.id'))

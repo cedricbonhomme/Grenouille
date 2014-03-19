@@ -1,13 +1,15 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import pycountry
 from flask import flash
 from flask.ext.wtf import Form
 from wtforms import TextField, TextAreaField, SelectField, PasswordField, SubmitField, validators
 
 from web.models import User
 
+import logging
+logging.getLogger('pycountry').addHandler(logging.NullHandler())
+import pycountry
 
 class SigninForm(Form):
     """

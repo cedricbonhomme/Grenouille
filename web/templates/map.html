@@ -22,7 +22,7 @@ $(document).ready(function() {
 function get_stations() {
     $.ajax({
         type: 'GET',
-        url: "/stations.json/",
+        url: "/weather.json/",
         async:false,
         success: function(data) {
             stations = data["result"];
@@ -69,7 +69,7 @@ function create_map() {
     );  
     map.addLayers([osm, gsat, gphy, gmap, ghyb]);
 
-    var lonLatCenter = new OpenLayers.LonLat(stations[0]["longitude"], stations[0]["latitude"]).transform(
+    var lonLatCenter = new OpenLayers.LonLat(stations[0]["coord"]["lon"], stations[0]["coord"]["lat"]).transform(
                                                 new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
     map.setCenter (lonLatCenter, zoom);
 
@@ -77,14 +77,14 @@ function create_map() {
     map.addLayer(stations_location);
     for (station in stations)
     {
-        var station_marker = new OpenLayers.LonLat(stations[station]["longitude"], stations[station]["latitude"]).transform(
+        var station_marker = new OpenLayers.LonLat(stations[station]["coord"]["lon"], stations[station]["coord"]["lat"]).transform(
                     new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
                     popupClass = AutoSizeAnchoredMinSize;
 
         popupContentHTML = '<p><b><a href="/station/'+stations[station]["id"]+'/">'+stations[station]["name"]+"</a></b></p><hr /><p>" +
-                            "Temperature: " + stations[station]["temperature"] + " °C<br />" +
-                            "Pression: " + stations[station]["pression"] + " hpa<br />" +
-                            "Humidity: " + stations[station]["humidity"] + "  %<br />" +
+                            "Temperature: " + stations[station]["main"]["temperature"] + " °C<br />" +
+                            "Pression: " + stations[station]["main"]["pression"] + " hpa<br />" +
+                            "Humidity: " + stations[station]["main"]["humidity"] + "  %<br />" +
                             "Date: " + stations[station]["date"] + "<br />" +
                             "</p>";
         addMarker(station_marker, popupClass, popupContentHTML, true, true, "/static/js/img/marker-red.png", stations_location);

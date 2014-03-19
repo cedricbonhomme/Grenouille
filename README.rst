@@ -75,7 +75,7 @@ This example shows how to send measures from a station to the platform.
 
 .. code:: python
 
-    >>> url = "https://petite-grenouille.herokuapp.com/measure.json/"
+    >>> url = "https://petite-grenouille.herokuapp.com/weather.json/"
     >>> headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
     >>> data = {'pression': 1023, 'api_key': 'VDZCF0aa1nUazxbCX2q01FKRWALxdIzCMNmg', 'temperature': 20, 'station_id': 2, 'humidity': 81}
     >>> r = requests.post(url, data=json.dumps(data), headers=headers, auth=('your-email@example.com', 'password'))

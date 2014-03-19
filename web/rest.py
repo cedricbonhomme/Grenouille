@@ -28,15 +28,18 @@ def users_json():
         dic = {
                 "user" : user.id,
                 "stations": [ {"name":station.name,
-                               "altitude":station.altitude,
-                               "latitude":station.latitude,
-                               "longitude":station.longitude} for station in user.stations]
+                               "coord": {
+                                        "alt":station.altitude,
+                                        "lat":station.latitude,
+                                        "lon":station.longitude,
+                                     }
+                               } for station in user.stations]
             }
         result.append(dic)
     return jsonify(result=result)
 
-@app.route('/stations.json/', methods=['GET'])
-def stations_json():
+@app.route('/weather.json/', methods=['GET'])
+def weather():
     """
     This JSON service returns the list of all stations.
     """
@@ -54,18 +57,23 @@ def stations_json():
                 last_measure_temperature = ""
                 last_measure_pression = ""
                 last_measure_humidity = ""
-            result.append({"id":station.id,
+            result.append({
+                            "id":station.id,
                             "name":station.name,
-                            "altitude":station.altitude,
-                            "latitude":station.latitude,
-                            "longitude":station.longitude,
                             "date":last_measure_date,
-                            "temperature":last_measure_temperature,
-                            "pression":last_measure_pression,
-                            "humidity":last_measure_humidity})
+                            "coord": {
+                                        "lat":station.latitude,
+                                        "lon":station.longitude,
+                                     },
+                            "main": {
+                                        "temperature":last_measure_temperature,
+                                        "pression":last_measure_pression,
+                                        "humidity":last_measure_humidity
+                                    }
+                        })
     return jsonify(result=result)
 
-@app.route('/measure.json/', methods=['POST'])
+@app.route('/weather.json/', methods=['POST'])
 @auth.login_required
 def measure_json():
     """

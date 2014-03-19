@@ -33,9 +33,9 @@
         {% for measure in station.measures|sort(attribute="date")|reverse %}
             <tr>
                 <td>{{ loop.index }}</td>
-                <td>{{ measure.temperature }}</td>
-                <td>{{ measure.pression }}</td>
-                <td>{{ measure.humidity }}</td>
+                <td>{{ measure.temperature }} °C</td>
+                <td>{{ measure.pression }} hpa</td>
+                <td>{{ measure.humidity }} %</td>
                 <td>{{ measure.date }}</td>
             </tr>
         {% endfor %}

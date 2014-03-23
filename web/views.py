@@ -178,6 +178,7 @@ def edit_station(station_id=None):
             else:
                 # Create a new station
                 station = Station(name=form.name.data,
+                                    country=form.country.data,
                                     altitude=form.altitude.data,
                                     latitude=form.latitude.data,
                                     longitude=form.longitude.data,

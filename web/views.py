@@ -130,7 +130,7 @@ def profile():
             if form.password.data != "":
                 user.set_password(form.password.data)
             db.session.commit()
-            flash('User "' + user.firstname + '" successfully updated', 'success')
+            flash('User "' + user.firstname + '" successfully updated.', 'success')
             return redirect(url_for('profile'))
         else:
             return render_template('profile.html', form=form)
@@ -172,7 +172,7 @@ def edit_station(station_id=None):
         if form.validate():
             if station_id != None:
                 form.populate_obj(station)
-                flash('Station "' + station.name + '" successfully updated', 'success')
+                flash('Station "' + station.name + '" successfully updated.', 'success')
             else:
                 station = Station(name=form.name.data,
                                     altitude=form.altitude.data,
@@ -180,7 +180,7 @@ def edit_station(station_id=None):
                                     longitude=form.longitude.data,
                                     user_id=user.id)
                 user.stations.append(station)
-                flash('Station "' + station.name + '" successfully created', 'success')
+                flash('Station "' + station.name + '" successfully created.', 'success')
             db.session.commit()
         else:
             flash('Problem with the form.', 'danger')
@@ -208,7 +208,7 @@ def delete_station(station_id=None):
         if station.id == station_id:
             db.session.delete(station)
             db.session.commit()
-            flash('Station "' + station.name + '" successfully deleted', 'success')
+            flash('Station "' + station.name + '" successfully deleted.', 'success')
             break
     else:
         flash('This station does not exist.', 'danger')

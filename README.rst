@@ -100,7 +100,7 @@ License
 =======
 
 `Grenouille <https://bitbucket.org/cedricbonhomme/grenouille>`_
-is under `GPLv3 <http://www.gnu.org/licenses/gpl-3.0.txt>`_ license.
+is under the `GNU Affero General Public License version 3 <https://www.gnu.org/licenses/agpl-3.0.html>`_ license.
 
 Contact
 =======

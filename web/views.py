@@ -148,7 +148,7 @@ def station(station_id=None):
     country = pycountry.countries.get(alpha2=station.country).official_name
     return render_template('station.html', station=station, country=country)
 
-@app.route('/edit_station/', methods=['GET', 'POST'])
+@app.route('/create_station/', methods=['GET', 'POST'])
 @app.route('/edit_station/<int:station_id>/', methods=['GET', 'POST'])
 @login_required
 def edit_station(station_id=None):
@@ -174,17 +174,18 @@ def edit_station(station_id=None):
                 form.populate_obj(station)
                 flash('Station "' + station.name + '" successfully updated', 'success')
             else:
-                new_station = Station(name=form.name.data,
-                                        altitude=form.altitude.data,
-                                        latitude=form.latitude.data,
-                                        longitude=form.longitude.data,
-                                        user_id=user.id)
-                user.stations.append(new_station)
-                flash('Station "' + new_station.name + '" successfully created', 'success')
+                station = Station(name=form.name.data,
+                                    altitude=form.altitude.data,
+                                    latitude=form.latitude.data,
+                                    longitude=form.longitude.data,
+                                    user_id=user.id)
+                user.stations.append(station)
+                flash('Station "' + station.name + '" successfully created', 'success')
             db.session.commit()
         else:
             flash('Problem with the form.', 'danger')
-        return redirect(redirect_url())
+            return redirect(redirect_url())
+        return redirect("/edit_station/"+str(station.id)+"/")
 
     if request.method == 'GET':
         if station_id != None:

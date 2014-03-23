@@ -65,7 +65,7 @@ Deploying the application on a traditional server
      * Restarting with reloader
 
 
-You can connect with the email *root@localhost* and the password *root*.
+You can connect with the email *root@grenouille.localhost* and the password *root*.
 You should change these information.
 
 

@@ -61,7 +61,7 @@ db.create_all()
 role_admin = Role(name="admin")
 role_user = Role(name="user")
 
-user1 = User(firstname="admin", lastname="admin", email="root@localhost", pwdhash=generate_password_hash("root"))
+user1 = User(firstname="admin", lastname="admin", email="root@grenouille.localhost", pwdhash=generate_password_hash("root"))
 
 user1.roles.extend([role_admin, role_user])
 

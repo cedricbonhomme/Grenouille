@@ -274,3 +274,19 @@ def create_user(user_id=None):
             form = ProfileForm()
             message="Add a new user"
         return render_template('/admin/create_user.html', form=form, message=message)
+
+@app.route('/admin/delete_user/<int:user_id>/', methods=['GET'])
+@login_required
+@admin_permission.require()
+def delete_user(user_id=None):
+    """
+    Delete a user (with its stations and measures).
+    """
+    user = User.query.filter(User.id == user_id).first()
+    if user != None:
+        db.session.delete(user)
+        db.session.commit()
+        flash('User "' + user.firstname + '" successfully deleted.', 'success')
+    else:
+        flash('This user does not exist.', 'danger')
+    return redirect(redirect_url())

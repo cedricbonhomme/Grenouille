@@ -19,7 +19,7 @@ class User(db.Model, UserMixin):
     roles = db.relationship('Role', backref = 'user', lazy = 'dynamic')
     apikey = db.Column(db.String(86), default = base64.b64encode(hashlib.sha512( str(random.getrandbits(256)) ).digest(),
                                                                                 random.choice(['rA','aZ','gQ','hH','hG','aR','DD'])).rstrip('=='))
-    stations = db.relationship('Station', backref = 'owner', lazy = 'dynamic')
+    stations = db.relationship('Station', backref = 'owner', lazy = 'dynamic', cascade='all,delete-orphan')
 
     def get_id(self):
         return self.email
@@ -52,7 +52,7 @@ class Station(db.Model):
     altitude = db.Column(db.Float())
     latitude = db.Column(db.Float())
     longitude = db.Column(db.Float())
-    measures = db.relationship('Measure', backref = 'station', lazy = 'dynamic')
+    measures = db.relationship('Measure', backref = 'station', lazy = 'dynamic', cascade='all,delete-orphan')
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 

@@ -49,6 +49,9 @@
                 <li><a href="/map/"><span class="glyphicon glyphicon-list"></span> Available stations</a></li>
                 {% if g.user.is_authenticated() %}
                     <li><a href="{{ url_for('profile') }}"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+                    {% if g.user.roles.all()[0].name == "admin" %}
+                        <li><a href="{{ url_for('dashboard') }}"><span class="glyphicon glyphicon-dashboard"></span> Dashboard</a></li>
+                    {% endif %}
                     <li><a href="{{ url_for('logout') }}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                 {% else %}
                     <li><a href="{{ url_for('login') }}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
@@ -76,14 +79,18 @@
     <!-- Make sure to add jQuery - download the most recent version at http://jquery.com/ -->
     <script src="{{ url_for('.static', filename = 'js/jquery-latest.js') }}"></script>
     <script src="{{ url_for('.static', filename = 'js/bootstrap.js') }}"></script>
-    
+
     {% block content %}{% endblock %}
-    
+
+    <br />
     <div class="container">
         <div class="row">
-            <p>This software is under GPLv3 license. You are welcome to copy, modify or redistribute the 
-            <a href="https://bitbucket.org/cedricbonhomme/grenouille/">source code</a> according to the
-            <a href="https://www.gnu.org/licenses/gpl-3.0.txt">GPLv3</a> license.</p>
+            <div class="col-md-12">
+                <hr />
+                <p>This software is under GPLv3 license. You are welcome to copy, modify or redistribute the 
+                <a href="https://bitbucket.org/cedricbonhomme/grenouille/">source code</a> according to the
+                <a href="https://www.gnu.org/licenses/gpl-3.0.txt">GPLv3</a> license.</p>
+            </div>
         </div>
     </div>
   </body>

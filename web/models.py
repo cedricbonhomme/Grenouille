@@ -12,10 +12,10 @@ class User(db.Model, UserMixin):
     Represent a user.
     """
     id = db.Column(db.Integer, primary_key = True)
-    firstname = db.Column(db.String(64), unique = True)
-    lastname = db.Column(db.String(64), unique = True)
+    firstname = db.Column(db.String(64))
+    lastname = db.Column(db.String(64))
     email = db.Column(db.String(120), index = True, unique = True)
-    pwdhash = db.Column(db.String(120), unique = True)
+    pwdhash = db.Column(db.String(120))
     roles = db.relationship('Role', backref = 'user', lazy = 'dynamic')
     apikey = db.Column(db.String(86), default = base64.b64encode(hashlib.sha512( str(random.getrandbits(256)) ).digest(),
                                                                                 random.choice(['rA','aZ','gQ','hH','hG','aR','DD'])).rstrip('=='))
@@ -48,7 +48,7 @@ class Station(db.Model):
     """
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(64), default="New station")
-    country = db.Column(db.String(64), default="France")
+    country = db.Column(db.String(64), default="FR")
     altitude = db.Column(db.Float())
     latitude = db.Column(db.Float())
     longitude = db.Column(db.Float())

@@ -120,7 +120,7 @@ def map_view():
 @login_required
 def profile():
     """
-    Edit the profile of the user.
+    Edit the profile of the currently logged user.
     """
     user = User.query.filter(User.email == g.user.email).first()
     form = ProfileForm()
@@ -143,7 +143,7 @@ def profile():
 @app.route('/station/<int:station_id>/', methods=['GET'])
 def station(station_id=None):
     """
-    Edit the profile of the user.
+    Edit the information about a station.
     """
     station = Station.query.filter(Station.id == station_id).first()
     country = pycountry.countries.get(alpha2=station.country).official_name
@@ -172,9 +172,11 @@ def edit_station(station_id=None):
     if request.method == 'POST':
         if form.validate():
             if station_id != None:
+                # Edit a station
                 form.populate_obj(station)
                 flash('Station "' + station.name + '" successfully updated.', 'success')
             else:
+                # Create a new station
                 station = Station(name=form.name.data,
                                     altitude=form.altitude.data,
                                     latitude=form.latitude.data,
@@ -204,7 +206,6 @@ def delete_station(station_id=None):
     Delete a station.
     """
     user = User.query.filter(User.email == g.user.email).first()
-
     for station in user.stations:
         if station.id == station_id:
             db.session.delete(station)
@@ -226,7 +227,6 @@ def dashboard():
     Adminstrator's dashboard.
     """
     users = User.query.all()
-
     return render_template('admin/dashboard.html', users=users)
 
 @app.route('/admin/create_user/', methods=['GET', 'POST'])
@@ -242,6 +242,7 @@ def create_user(user_id=None):
     if request.method == 'POST':
         if form.validate():
             if user_id != None:
+                # Edit a user
                 user = User.query.filter(User.id == user_id).first()
                 form.populate_obj(user)
                 if form.password.data != "":
@@ -249,6 +250,7 @@ def create_user(user_id=None):
                 db.session.commit()
                 flash('User "' + user.firstname + '" successfully updated.', 'success')
             else:
+                # Create a new user
                 role_user = Role.query.filter(Role.name == "user").first()
                 user = User(firstname=form.firstname.data,
                              lastname=form.lastname.data,

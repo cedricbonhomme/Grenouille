@@ -6,8 +6,9 @@ from flask.ext.login import LoginManager, login_user, logout_user, login_require
 from flask.ext.principal import Principal, Identity, AnonymousIdentity, identity_changed, identity_loaded, Permission, RoleNeed, UserNeed
 
 from web import app, db
-from web.models import User, Station
+from web.models import User, Station, Role
 from forms import SigninForm, ProfileForm, StationForm
+from werkzeug import generate_password_hash
 
 import logging
 logging.getLogger('pycountry').addHandler(logging.NullHandler())
@@ -217,11 +218,56 @@ def delete_station(station_id=None):
 #
 # Views dedicated to administration tasks.
 #
-@app.route('/admin/create_user/', methods=['GET', 'POST'])
+@app.route('/admin/dashboard/', methods=['GET', 'POST'])
 @login_required
 @admin_permission.require()
-def create_user():
+def dashboard():
     """
-    Administration view.
+    Adminstrator's dashboard.
     """
-    return render_template('admin/create_user.html')
+    users = User.query.all()
+
+    return render_template('admin/dashboard.html', users=users)
+
+@app.route('/admin/create_user/', methods=['GET', 'POST'])
+@app.route('/admin/edit_user/<int:user_id>/', methods=['GET', 'POST'])
+@login_required
+@admin_permission.require()
+def create_user(user_id=None):
+    """
+    Edit the profile of the user.
+    """
+    form = ProfileForm()
+
+    if request.method == 'POST':
+        if form.validate():
+            if user_id != None:
+                user = User.query.filter(User.id == user_id).first()
+                form.populate_obj(user)
+                if form.password.data != "":
+                    user.set_password(form.password.data)
+                db.session.commit()
+                flash('User "' + user.firstname + '" successfully updated.', 'success')
+            else:
+                role_user = Role.query.filter(Role.name == "user").first()
+                user = User(firstname=form.firstname.data,
+                             lastname=form.lastname.data,
+                             email=form.email.data,
+                             pwdhash=generate_password_hash(form.password.data))
+                user.roles.extend([role_user])
+                db.session.add(user)
+                db.session.commit()
+                flash('User "' + user.firstname + '" successfully created.', 'success')
+            return redirect("/admin/edit_user/"+str(user.id)+"/")
+        else:
+            return render_template('profile.html', form=form)
+
+    if request.method == 'GET':
+        if user_id != None:
+            user = User.query.filter(User.id == user_id).first()
+            form = ProfileForm(obj=user)
+            message = "Edit the user <i>" + user.firstname + "</i>"
+        else:
+            form = ProfileForm()
+            message="Add a new user"
+        return render_template('/admin/create_user.html', form=form, message=message)

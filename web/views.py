@@ -214,11 +214,14 @@ def delete_station(station_id=None):
         flash('This station does not exist.', 'danger')
     return redirect(redirect_url())
 
-@app.route('/admin/', methods=['GET', 'POST'])
+#
+# Views dedicated to administration tasks.
+#
+@app.route('/admin/create_user/', methods=['GET', 'POST'])
 @login_required
 @admin_permission.require()
-def admin():
+def create_user():
     """
     Administration view.
     """
-    return render_template('admin.html')
+    return render_template('admin/create_user.html')

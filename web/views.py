@@ -9,6 +9,10 @@ from web import app, db
 from web.models import User, Station
 from forms import SigninForm, ProfileForm, StationForm
 
+import logging
+logging.getLogger('pycountry').addHandler(logging.NullHandler())
+import pycountry
+
 Principal(app)
 # Create a permission with a single Need, in this case a RoleNeed.
 admin_permission = Permission(RoleNeed('admin'))
@@ -141,7 +145,8 @@ def station(station_id=None):
     Edit the profile of the user.
     """
     station = Station.query.filter(Station.id == station_id).first()
-    return render_template('station.html', station=station)
+    country = pycountry.countries.get(alpha2=station.country).official_name
+    return render_template('station.html', station=station, country=country)
 
 @app.route('/edit_station/', methods=['GET', 'POST'])
 @app.route('/edit_station/<int:station_id>/', methods=['GET', 'POST'])

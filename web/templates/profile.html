@@ -30,36 +30,40 @@
         </div>
     </div>
     <div class="jumbotron">
-        <h1>Your stations</h1>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Altitude</th>
-                    <th>Latitude</th>
-                    <th>Longitude</th>
-                    <th>Mesures sent</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for station in user.stations|sort(attribute="name") %}
-                <tr>
-                    <td>{{ loop.index }}</td>
-                    <td><a href="/station/{{ station.id }}">{{ station.name }}</a></td>
-                    <td>{{ station.altitude }}</td>
-                    <td>{{ station.latitude }}</td>
-                    <td>{{ station.longitude }}</td>
-                    <td>{{ station.measures.all()|count }}</td>
-                    <td>
-                        <a href="/station/{{ station.id }}"><i class="glyphicon glyphicon-th-list" title="Measures"></i></a>
-                        <a href="/edit_station/{{ station.id }}"><i class="glyphicon glyphicon-edit" title="Edit this station"></i></a>
-                        <a href="/delete_station/{{ station.id }}"><i class="glyphicon glyphicon-remove" title="Delete this station"></i></a>
-                    </td>
-            {% endfor %}
-            </tbody>
-        </table>
+        {% if user.stations.all()|count == 0 %}
+            <h1>You haven't added any stations.</h1>
+        {% else %}
+            <h1>Your stations</h1>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Altitude</th>
+                        <th>Latitude</th>
+                        <th>Longitude</th>
+                        <th>Mesures sent</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for station in user.stations|sort(attribute="name") %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td><a href="/station/{{ station.id }}">{{ station.name }}</a></td>
+                        <td>{{ station.altitude }}</td>
+                        <td>{{ station.latitude }}</td>
+                        <td>{{ station.longitude }}</td>
+                        <td>{{ station.measures.all()|count }}</td>
+                        <td>
+                            <a href="/station/{{ station.id }}"><i class="glyphicon glyphicon-th-list" title="Measures"></i></a>
+                            <a href="/edit_station/{{ station.id }}"><i class="glyphicon glyphicon-edit" title="Edit this station"></i></a>
+                            <a href="/delete_station/{{ station.id }}"><i class="glyphicon glyphicon-remove" title="Delete this station"></i></a>
+                        </td>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
         <a href="/create_station/" class="btn btn-default">Add a new station</a>
     </div>
 </div>

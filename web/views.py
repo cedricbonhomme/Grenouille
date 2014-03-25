@@ -1,7 +1,8 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask import render_template, jsonify, request, flash, session, url_for, redirect, g, current_app
+import json
+from flask import render_template, jsonify, request, flash, session, url_for, redirect, g, current_app, make_response
 from flask.ext.login import LoginManager, login_user, logout_user, login_required, current_user, AnonymousUserMixin
 from flask.ext.principal import Principal, Identity, AnonymousIdentity, identity_changed, identity_loaded, Permission, RoleNeed, UserNeed
 
@@ -216,6 +217,23 @@ def delete_station(station_id=None):
     else:
         flash('This station does not exist.', 'danger')
     return redirect(redirect_url())
+
+@app.route('/download_station/<int:station_id>/', methods=['GET'])
+@login_required
+def download_station(station_id):
+    """
+    Return all measures sent by a station in a JSON file.
+    """
+    user = User.query.filter(User.email == g.user.email).first()
+    measures = []
+    for station in user.stations:
+        if station.id == station_id:
+            measures.extend([json.loads(str(measure)) for measure in station.measures])
+            break
+    r = make_response( jsonify(measures=measures) )
+    r.mimetype = 'application/json'
+    r.headers["Content-Disposition"] = 'attachment; filename=measures_station_'+str(station.id)+'.json'
+    return r
 
 #
 # Views dedicated to administration tasks.

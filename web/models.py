@@ -1,8 +1,9 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from datetime import datetime
+import json
 import random, base64, hashlib
+from datetime import datetime
 from werkzeug import generate_password_hash, check_password_hash
 from flask.ext.login import UserMixin
 from web import db
@@ -76,3 +77,9 @@ class Measure(db.Model):
     date = db.Column(db.DateTime(), default=datetime.now)
 
     station_id = db.Column(db.Integer, db.ForeignKey('station.id'))
+
+    def __repr__(self):
+        return json.dumps({"temperature": self.temperature,
+                "pression": self.pression,
+                "humidity": self.humidity,
+                "date": str(self.date)})

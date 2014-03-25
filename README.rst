@@ -88,6 +88,11 @@ This example shows how to send measures from a station to the platform.
     "result": "OK"
     }
 
+You can use the provided client:
+
+.. code:: bash
+
+    $ ./grenouillecli.py --email your-email@example.com --password password --api-key qGWjgIybd1i8uh89o5 --station 4 --temperature 25.7 --pression 980 --humidity 84
 
 Donation
 ========

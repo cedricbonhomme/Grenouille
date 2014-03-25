@@ -18,24 +18,24 @@ def send_measure(url, data, email, password):
 if __name__ == "__main__":
     # Point of entry in execution mode
     import argparse
-    parser = argparse.ArgumentParser(description='Example of Grenouille client.')
-    parser.add_argument('-u','--url', dest="url",
+    parser = argparse.ArgumentParser(description='Client to send weather data to the Grenouille platform.')
+    parser.add_argument('--url', dest="url",
                         default="https://petite-grenouille.herokuapp.com/weather.json/",
                         help='URL of the platform')
-    parser.add_argument('-e','--email', dest="email",
+    parser.add_argument('--email', dest="email", required=True,
                         help='Your email')
-    parser.add_argument('-p','--password', dest="password",
+    parser.add_argument('--password', dest="password", required=True,
                         help='Your password')
-    parser.add_argument('-k','--api-key', dest="key",
+    parser.add_argument('--api-key', dest="key", required=True,
                         help='Your API key')
-    parser.add_argument('-s','--station', dest="station", type=int,
+    parser.add_argument('--station', dest="station", type=int, required=True,
                         help='Id of the station')
 
-    parser.add_argument('--temperature', dest="temperature", type=float,
+    parser.add_argument('--temperature', dest="temperature", type=float, required=True,
                         default=24.5, help='Temperature')
-    parser.add_argument('--pression', dest="pression", type=float,
+    parser.add_argument('--pression', dest="pression", type=float, required=True,
                         default=1024, help='Pression')
-    parser.add_argument('--humidity', dest="humidity", type=float,
+    parser.add_argument('--humidity', dest="humidity", type=float, required=True,
                         default=52, help='Humidity')
 
     args = parser.parse_args()

@@ -46,7 +46,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/map/"><span class="glyphicon glyphicon-list"></span> Available stations</a></li>
+                <li><a href="/"><span class="glyphicon glyphicon-globe"></span> World map stations</a></li>
                 {% if g.user.is_authenticated() %}
                     <li><a href="{{ url_for('profile') }}"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
                     {% if g.user.roles.all()[0].name == "admin" %}

@@ -110,7 +110,6 @@ def logout():
     return redirect(url_for('map_view'))
 
 @app.route('/', methods=['GET'])
-@app.route('/map/', methods=['GET'])
 def map_view():
     """
     Main view which displays all public stations.

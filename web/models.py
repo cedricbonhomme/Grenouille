@@ -33,6 +33,9 @@ class User(db.Model, UserMixin):
     def check_password(self, password):
         return check_password_hash(self.pwdhash, password)
 
+    def __eq__(self, other):
+        return self.id == other.id
+
     def __repr__(self):
         return '<User %r>' % (self.firstname)
 

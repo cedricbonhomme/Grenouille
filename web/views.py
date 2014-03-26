@@ -251,6 +251,7 @@ def dashboard():
     Adminstrator's dashboard.
     """
     users = User.query.all()
+    users.remove(g.user)
     return render_template('admin/dashboard.html', users=users)
 
 @app.route('/admin/create_user/', methods=['GET', 'POST'])
@@ -306,7 +307,7 @@ def delete_user(user_id=None):
     Delete a user (with its stations and measures).
     """
     user = User.query.filter(User.id == user_id).first()
-    if user != None:
+    if user is not None:
         db.session.delete(user)
         db.session.commit()
         flash('User "' + user.firstname + '" successfully deleted.', 'success')
@@ -323,7 +324,7 @@ def disable_user(user_id=None):
     Enable or disable the API key of a user.
     """
     user = User.query.filter(User.id == user_id).first()
-    if user != None:
+    if user is not None:
         if user.apikey != "":
             user.apikey = ""
             flash('API key of the user "' + user.firstname + '" successfully disabled.', 'success')

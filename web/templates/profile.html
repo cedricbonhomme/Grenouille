@@ -32,6 +32,9 @@
                 {{ user.apikey }}
             {% endif %}
         </div>
+        <h2>Membership</h2>
+        <p>Contributor since {{ user.date_created.strftime('%A, %d %B %Y') }}.</p>
+        <p>Last seen: {{ user.last_seen.strftime('%A, %d %B %Y at %H:%M:%S') }}.</p>
     </div>
     <div class="jumbotron">
         {% if user.stations.all()|count == 0 %}

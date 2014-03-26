@@ -18,6 +18,8 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), index = True, unique = True)
     pwdhash = db.Column(db.String(120))
     roles = db.relationship('Role', backref = 'user', lazy = 'dynamic')
+    date_created = db.Column(db.DateTime(), default=datetime.now)
+    last_seen = db.Column(db.DateTime(), default=datetime.now)
     apikey = db.Column(db.String(86), default = base64.b64encode(hashlib.sha512( str(random.getrandbits(256)) ).digest(),
                                                                                 random.choice(['rA','aZ','gQ','hH','hG','aR','DD'])).rstrip('=='))
     stations = db.relationship('Station', backref = 'owner', lazy = 'dynamic', cascade='all,delete-orphan')

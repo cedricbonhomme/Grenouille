@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import json
+from datetime import datetime
 from flask import render_template, jsonify, request, flash, session, url_for, redirect, g, current_app, make_response
 from flask.ext.login import LoginManager, login_user, logout_user, login_required, current_user, AnonymousUserMixin
 from flask.ext.principal import Principal, Identity, AnonymousIdentity, identity_changed, identity_loaded, Permission, RoleNeed, UserNeed
@@ -96,6 +97,11 @@ def logout():
     """
     Log out view. Removes the user information from the session.
     """
+    # Update last_seen field
+    g.user.last_seen = datetime.utcnow()
+    db.session.add(g.user)
+    db.session.commit()
+
     # Remove the user information from the session
     logout_user()
 

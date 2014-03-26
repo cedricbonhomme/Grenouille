@@ -26,7 +26,11 @@
         </form>
         <h2>Your API key</h2>
         <div class="well">
-            {{ user.apikey }}
+            {% if user.apikey == "" %}
+                <p>Your API key has been disabled. Contact the administrator.</p>
+            {% else %}
+                {{ user.apikey }}
+            {% endif %}
         </div>
     </div>
     <div class="jumbotron">

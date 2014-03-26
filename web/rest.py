@@ -85,7 +85,7 @@ def measure_json():
         station_id = int(request.json["station_id"])
     except:
         return jsonify(result="UNAUTHORIZED")
-    if user.apikey != api_key:
+    if user.apikey == "" or user.apikey != api_key:
         return jsonify(result="UNAUTHORIZED")
     for station in user.stations:
         if station.id == station_id:

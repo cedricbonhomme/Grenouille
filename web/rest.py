@@ -114,7 +114,8 @@ def measure_json():
         if station.id == station_id:
             new_measure = Measure(temperature=request.json["temperature"],
                                 humidity=request.json["humidity"],
-                                pression=request.json["pression"])
+                                pression=request.json["pression"],
+                                station_id=station.id)
             station.measures.append(new_measure)
             db.session.commit()
             break

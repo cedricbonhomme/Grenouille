@@ -322,6 +322,20 @@ def create_user(user_id=None):
             message="Add a new user"
         return render_template('/admin/create_user.html', form=form, message=message)
 
+@app.route('/admin/user/<int:user_id>/', methods=['GET'])
+@login_required
+@admin_permission.require()
+def user(user_id=None):
+    """
+    See stations of the user.
+    """
+    user = User.query.filter(User.id == user_id).first()
+    if user is not None:
+        return render_template('/admin/user.html', user=user)
+    else:
+        flash('This user does not exist.', 'danger')
+        return redirect(redirect_url())
+
 @app.route('/admin/delete_user/<int:user_id>/', methods=['GET'])
 @login_required
 @admin_permission.require()

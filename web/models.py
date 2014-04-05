@@ -20,7 +20,7 @@
 __author__ = "Cedric Bonhomme"
 __version__ = "$Revision: 0.3 $"
 __date__ = "$Date: 2014/03/16 $"
-__revision__ = "$Date: 2014/03/26 $"
+__revision__ = "$Date: 2014/04/05 $"
 __copyright__ = "Copyright (c) Cedric Bonhomme"
 __license__ = "AGPLv3"
 
@@ -70,6 +70,7 @@ class User(db.Model, UserMixin):
         Return True if the user has administrator rights.
         """
         return len([role for role in self.roles if role.name == "admin"]) != 0
+
     def __eq__(self, other):
         return self.id == other.id
 

@@ -66,34 +66,38 @@ def weather():
     """
     This JSON service returns the list of all stations.
     """
-    users = User.query.all()
+    query = request.args.get('q', None)
+    if query != None:
+        stations = Station.query.filter(Station.country==query)
+    else:
+        stations = Station.query.all()
     result = []
-    for user in users:
-        for station in user.stations:
-            try:
-                last_measure_date = station.measures[-1].date
-                last_measure_temperature = station.measures[-1].temperature
-                last_measure_pression = station.measures[-1].pression
-                last_measure_humidity = station.measures[-1].humidity
-            except:
-                last_measure_date = ""
-                last_measure_temperature = ""
-                last_measure_pression = ""
-                last_measure_humidity = ""
-            result.append({
-                            "id":station.id,
-                            "name":station.name,
-                            "date":last_measure_date,
-                            "coord": {
-                                        "lat":station.latitude,
-                                        "lon":station.longitude,
-                                     },
-                            "main": {
-                                        "temperature":last_measure_temperature,
-                                        "pression":last_measure_pression,
-                                        "humidity":last_measure_humidity
-                                    }
-                        })
+    for station in stations:
+        try:
+            last_measure_date = station.measures[-1].date
+            last_measure_temperature = station.measures[-1].temperature
+            last_measure_pression = station.measures[-1].pression
+            last_measure_humidity = station.measures[-1].humidity
+        except:
+            last_measure_date = ""
+            last_measure_temperature = ""
+            last_measure_pression = ""
+            last_measure_humidity = ""
+        result.append({
+                        "id":station.id,
+                        "name":station.name,
+                        "country":station.country,
+                        "date":last_measure_date,
+                        "coord": {
+                                    "lat":station.latitude,
+                                    "lon":station.longitude,
+                                    },
+                        "main": {
+                                    "temperature":last_measure_temperature,
+                                    "pression":last_measure_pression,
+                                    "humidity":last_measure_humidity
+                                }
+                    })
     return jsonify(result=result)
 
 @app.route('/weather.json/', methods=['POST'])

@@ -49,7 +49,7 @@
                 <li><a href="/"><span class="glyphicon glyphicon-globe"></span> World map stations</a></li>
                 {% if g.user.is_authenticated() %}
                     <li><a href="{{ url_for('profile') }}"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
-                    {% if g.user.roles.all()[0].name == "admin" %}
+                    {% if g.user.is_admin() %}
                         <li><a href="{{ url_for('dashboard') }}"><span class="glyphicon glyphicon-dashboard"></span> Dashboard</a></li>
                     {% endif %}
                     <li><a href="{{ url_for('logout') }}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>

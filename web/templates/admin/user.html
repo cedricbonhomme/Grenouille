@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+{% block head%}
+{{super()}}
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="jumbotron">
+        <a href="/admin/edit_user/{{ user.id }}/" class="btn btn-default">Edit this user</a>
+        <h2>Membership</h2>
+        <p>Contributor since {{ user.date_created.strftime('%A, %d %B %Y') }}.</p>
+        <p>Last seen: {{ user.last_seen.strftime('%A, %d %B %Y at %H:%M:%S') }}.</p>
+    </div>
+    <div class="jumbotron">
+        {% if user.stations.all()|count == 0 %}
+            <h1>This user hasn't added any stations.</h1>
+        {% else %}
+            <h1>Stations</h1>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Altitude</th>
+                        <th>Latitude</th>
+                        <th>Longitude</th>
+                        <th>Mesures sent</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for station in user.stations|sort(attribute="name") %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td><a href="/station/{{ station.id }}">{{ station.name }}</a></td>
+                        <td>{{ station.altitude }}</td>
+                        <td>{{ station.latitude }}</td>
+                        <td>{{ station.longitude }}</td>
+                        <td>{{ station.measures.all()|count }}</td>
+                        <td>
+                            <a href="/station/{{ station.id }}"><i class="glyphicon glyphicon-th-list" title="Measures"></i></a>
+                            <a href="/download_station/{{ station.id }}"><i class="glyphicon glyphicon-download" title="Download all measures from this station"></i></a>
+                            <a href="/edit_station/{{ station.id }}"><i class="glyphicon glyphicon-edit" title="Edit this station"></i></a>
+                            <a href="/delete_station/{{ station.id }}"><i class="glyphicon glyphicon-remove" title="Delete this station"></i></a>
+                        </td>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+        <a href="/create_station/" class="btn btn-default">Add a new station</a>
+    </div>
+</div>
+{% endblock %}

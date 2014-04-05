@@ -64,7 +64,9 @@ def users_json():
 @app.route('/weather.json/', methods=['GET'])
 def weather():
     """
-    This JSON service returns the list of all stations.
+    This JSON service returns the list of all stations
+    (with their last measures) when called without argument.
+    It is possible to ask for the list of stations of a country.
     """
     query = request.args.get('q', None)
     if query != None:
@@ -104,7 +106,7 @@ def weather():
 @auth.login_required
 def measure_json():
     """
-    Retrieves measures send by a station.
+    Retrieves measures sent by a station.
     """
     user = User.query.filter(User.email == g.user.email).first()
     try:

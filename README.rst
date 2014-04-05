@@ -97,6 +97,51 @@ You can use the provided client:
         "result": "OK"
     }
 
+
+Get measures
+''''''''''''
+
+By country:
+
+.. code:: bash
+
+    $ curl https://petite-grenouille.herokuapp.com/weather.json/?q=FR
+    {
+        "result": [
+            {
+            "coord": {
+                "lat": 49.115558, 
+                "lon": 6.175635
+            }, 
+            "country": "FR", 
+            "date": "Sat, 05 Apr 2014 21:17:43 GMT", 
+            "id": 1, 
+            "main": {
+                "humidity": 84.0, 
+                "pression": 980.0, 
+                "temperature": 25.7
+            }, 
+            "name": "Metz"
+            }, 
+            {
+            "coord": {
+                "lat": 45.649781, 
+                "lon": 0.153623
+            }, 
+            "country": "FR", 
+            "date": "Thu, 03 Apr 2014 05:34:00 GMT", 
+            "id": 5, 
+            "main": {
+                "humidity": 82.0, 
+                "pression": 980.0, 
+                "temperature": 23.2
+            }, 
+            "name": "Angoul\u00eame"
+            }
+        ]
+    }
+
+
 Donation
 ========
 

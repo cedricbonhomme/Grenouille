@@ -16,7 +16,7 @@ The project is divided in two parts:
 * the web service: a Flask application using PostgreSQL with an open API;
 * a proof of concept station: a watcher running on a `Raspberry Pi <http://www.raspberrypi.org/>`_ with a `Yoctopuce <http://www.yoctopuce.com>`_ sensor. Of course you can implement your own client with the API documentation.
 
-A demo instance is available `here <https://petite-grenouille.herokuapp.com/>`_.
+The official instance of the application is running `here <https://petite-grenouille.herokuapp.com/>`_.
 
 Usage
 =====
@@ -24,7 +24,7 @@ Usage
 Deployment
 ----------
 
-This application can be deployed on Heroku or on a traditional server.
+This application can be deployed both on Heroku and on a traditional server.
 
 Deploying the application on Heroku
 '''''''''''''''''''''''''''''''''''

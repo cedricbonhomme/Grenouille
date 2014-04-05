@@ -6,6 +6,14 @@
 <div class="container">
     <div class="jumbotron">
         <a href="/admin/edit_user/{{ user.id }}/" class="btn btn-default">Edit this user</a>
+        <h2>API key</h2>
+        <div class="well">
+            {% if user.apikey == "" %}
+                <p>This API key has been disabled.</p>
+            {% else %}
+                {{ user.apikey }}
+            {% endif %}
+        </div>
         <h2>Membership</h2>
         <p>Contributor since {{ user.date_created.strftime('%A, %d %B %Y') }}.</p>
         <p>Last seen: {{ user.last_seen.strftime('%A, %d %B %Y at %H:%M:%S') }}.</p>

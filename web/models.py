@@ -48,14 +48,28 @@ class User(db.Model, UserMixin):
     stations = db.relationship('Station', backref = 'owner', lazy = 'dynamic', cascade='all,delete-orphan')
 
     def get_id(self):
+        """
+        Return the id (email) of the user.
+        """
         return self.email
 
     def set_password(self, password):
+        """
+        Hash the password of the user.
+        """
         self.pwdhash = generate_password_hash(password)
 
     def check_password(self, password):
+        """
+        Check the password of the user.
+        """
         return check_password_hash(self.pwdhash, password)
 
+    def is_admin(self):
+        """
+        Return True if the user has administrator rights.
+        """
+        return len([role for role in self.roles if role.name == "admin"]) != 0
     def __eq__(self, other):
         return self.id == other.id
 

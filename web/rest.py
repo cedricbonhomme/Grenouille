@@ -81,6 +81,7 @@ def weather():
             last_measure_pression = station.measures[-1].pression
             last_measure_humidity = station.measures[-1].humidity
         except IndexError:
+            # Do not include station with no measures in the result of the JSON service.
             continue
         except Exception:
             last_measure_date = ""
@@ -109,6 +110,9 @@ def weather():
 def measure_json():
     """
     Retrieves measures sent by a station.
+    Authentication is required to send data to the platform.
+    The API key and the id of the station are checked before
+    the saving of the received measure.
     """
     user = User.query.filter(User.email == g.user.email).first()
     try:

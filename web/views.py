@@ -283,7 +283,7 @@ def dashboard():
 @admin_permission.require()
 def create_user(user_id=None):
     """
-    Edit the profile of the user.
+    Create or edit a user.
     """
     form = ProfileForm()
 
@@ -327,7 +327,7 @@ def create_user(user_id=None):
 @admin_permission.require()
 def user(user_id=None):
     """
-    See stations of the user.
+    See information about a user (stations, etc.).
     """
     user = User.query.filter(User.id == user_id).first()
     if user is not None:

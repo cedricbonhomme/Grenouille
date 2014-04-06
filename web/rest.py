@@ -80,7 +80,9 @@ def weather():
             last_measure_temperature = station.measures[-1].temperature
             last_measure_pression = station.measures[-1].pression
             last_measure_humidity = station.measures[-1].humidity
-        except:
+        except IndexError:
+            continue
+        except Exception:
             last_measure_date = ""
             last_measure_temperature = ""
             last_measure_pression = ""

@@ -24,6 +24,7 @@ __revision__ = "$Date: 2014/04/05 $"
 __copyright__ = "Copyright (c) Cedric Bonhomme"
 __license__ = "AGPLv3"
 
+import re
 import json
 import random, base64, hashlib
 from datetime import datetime
@@ -46,6 +47,10 @@ class User(db.Model, UserMixin):
     apikey = db.Column(db.String(86), default = base64.b64encode(hashlib.sha512( str(random.getrandbits(256)) ).digest(),
                                                                                 random.choice(['rA','aZ','gQ','hH','hG','aR','DD'])).rstrip('=='))
     stations = db.relationship('Station', backref = 'owner', lazy = 'dynamic', cascade='all,delete-orphan')
+
+    @staticmethod
+    def make_valid_nickname(nickname):
+        return re.sub(ur'[^\w \-]', '', nickname, flags=re.U)
 
     def get_id(self):
         """

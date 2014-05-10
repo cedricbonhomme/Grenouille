@@ -32,7 +32,7 @@ from flask.ext.principal import Principal, Identity, AnonymousIdentity, identity
 
 from web import app, db
 from web.models import User, Station, Role
-from forms import SigninForm, ProfileForm, StationForm
+from forms import SignupForm, SigninForm, ProfileForm, StationForm
 from werkzeug import generate_password_hash
 
 import logging
@@ -68,20 +68,30 @@ def on_identity_loaded(sender, identity):
 def before_request():
     g.user = current_user
     if g.user.is_authenticated():
-        pass
-        #g.user.last_seen = datetime.utcnow()
-        #db.session.add(g.user)
-        #db.session.commit()
+        g.user.last_seen = datetime.utcnow()
+        db.session.add(g.user)
+        db.session.commit()
+
+#
+# Custom error pages.
+#
+@app.errorhandler(401)
+def authentication_required(e):
+    flash(gettext('Authentication required.'), 'info')
+    return redirect(url_for('login'))
 
 @app.errorhandler(403)
 def authentication_failed(e):
-    flash('Authentication failed.', 'danger')
-    return redirect(url_for('login'))
+    flash(gettext('Forbidden.'), 'danger')
+    return redirect(url_for('home'))
 
-@app.errorhandler(401)
-def authentication_failed(e):
-    flash('Authentication required.', 'info')
-    return redirect(url_for('login'))
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('errors/404.html'), 404
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template('errors/500.html'), 500
 
 @login_manager.user_loader
 def load_user(email):
@@ -137,6 +147,32 @@ def logout():
 
     flash("Logged out successfully.", 'success')
     return redirect(url_for('map_view'))
+
+@app.route('/signup/', methods=['GET', 'POST'])
+def signup():
+    """
+    Signup page.
+    """
+    form = SignupForm()
+
+    if form.validate_on_submit():
+        role_user = Role.query.filter(Role.name == "user").first()
+        user = User(firstname=form.firstname.data,
+                    lastname=form.lastname.data,
+                    email=form.email.data,
+                    pwdhash=generate_password_hash(form.password.data))
+        user.roles = [role_user]
+        db.session.add(user)
+        try:
+            db.session.commit()
+        except IntegrityError:
+            flash('Email already used.', 'warning')
+            return render_template('signup.html', form=form)
+
+        flash('Your account has been created. You can now sign in.', 'success')
+        return redirect(url_for('home'))
+
+    return render_template('signup.html', form=form)
 
 @app.route('/', methods=['GET'])
 def map_view():

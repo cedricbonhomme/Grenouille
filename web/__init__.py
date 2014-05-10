@@ -27,6 +27,7 @@ __license__ = "AGPLv3"
 import os
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.gravatar import Gravatar
 
 import config
 
@@ -34,5 +35,13 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(12)
 app.config['SQLALCHEMY_DATABASE_URI'] = config.SQLALCHEMY_DATABASE_URI
 db = SQLAlchemy(app)
+
+app.config['RECAPTCHA_USE_SSL'] = True
+app.config['RECAPTCHA_PUBLIC_KEY'] = config.RECAPTCHA_PUBLIC_KEY
+app.config['RECAPTCHA_PRIVATE_KEY'] = config.RECAPTCHA_PRIVATE_KEY
+
+# Gravatar
+gravatar = Gravatar(app, size=100, rating='g', default='retro',
+                    force_default=False, use_ssl=False, base_url=None)
 
 from web import views, rest, models

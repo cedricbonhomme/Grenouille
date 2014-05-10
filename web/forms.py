@@ -27,12 +27,36 @@ __license__ = "AGPLv3"
 from flask import flash
 from flask.ext.wtf import Form
 from wtforms import TextField, TextAreaField, SelectField, PasswordField, SubmitField, validators
+from flask.ext.wtf.html5 import EmailField
+from flask_wtf import RecaptchaField
 
 from web.models import User
 
 import logging
 logging.getLogger('pycountry').addHandler(logging.NullHandler())
 import pycountry
+
+class SignupForm(Form):
+    firstname = TextField("First name", [validators.Required("Please enter your first name.")])
+    lastname = TextField("Last name", [validators.Required("Please enter your last name.")])
+    email = EmailField("Email", [validators.Length(min=6, max=35), validators.Required("Please enter your email.")])
+    password = PasswordField("Password", [validators.Required("Please enter a password."), validators.Length(min=6, max=100)])
+    recaptcha = RecaptchaField()
+    submit = SubmitField("Sign up")
+
+    def __init__(self, *args, **kwargs):
+        Form.__init__(self, *args, **kwargs)
+
+    def validate(self):
+        if not Form.validate(self):
+            return False
+        if self.firstname.data != User.make_valid_nickname(self.firstname.data):
+            self.firstname.errors.append('This firstname has invalid characters. Please use letters, numbers, dots and underscores only.')
+            return False
+        if self.lastname.data != User.make_valid_nickname(self.lastname.data):
+            self.lastname.errors.append('This lastname has invalid characters. Please use letters, numbers, dots and underscores only.')
+            return False
+        return True
 
 class SigninForm(Form):
     """

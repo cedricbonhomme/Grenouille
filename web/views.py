@@ -170,7 +170,7 @@ def signup():
             return render_template('signup.html', form=form)
 
         flash('Your account has been created. You can now sign in.', 'success')
-        return redirect(url_for('home'))
+        return redirect(url_for('login'))
 
     return render_template('signup.html', form=form)
 

@@ -7,16 +7,14 @@ Presentation
 
 Grenouille is an online service for weather data.
 All data can be obtained in JSON and displayed on a map.
-The Web application is based on Flask and uses PostgreSQL.
-It can be deployed on Heroku. An example of a client for the Yocto-Meteo sensor
+The Web application is based on `Flask <http://flask.pocoo.org/>`_.
+
+An example of a client for the Yocto-Meteo sensor
+(connected to a `Raspberry Pi <http://www.raspberrypi.org/>`_)
 is provided (inspired from `this code <https://github.com/tarekziade/grenouille/>`_).
+Of course you can implement your own client with the API documentation.
 
-The project is divided in two parts:
-
-* the web service: a Flask application using PostgreSQL with an open API;
-* a proof of concept station: a watcher running on a `Raspberry Pi <http://www.raspberrypi.org/>`_ with a `Yoctopuce <http://www.yoctopuce.com>`_ sensor. Of course you can implement your own client with the API documentation.
-
-The official instance of the application is running `here <https://petite-grenouille.herokuapp.com/>`_.
+The official instance is running `here <https://petite-grenouille.herokuapp.com/>`_.
 
 Usage
 =====
@@ -24,9 +22,10 @@ Usage
 Deployment
 ----------
 
-This application can be deployed on Heroku or on a traditional server.
+The platform can be deployed on Heroku or on a traditional server.
 
-After installation, you will be able to connect with the email *root@grenouille.localhost* and the password *password*.
+After installation, you will be able to connect with the email
+*root@grenouille.localhost* and the password *password*.
 
 Deploying the application on Heroku
 '''''''''''''''''''''''''''''''''''

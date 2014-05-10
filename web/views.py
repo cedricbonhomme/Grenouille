@@ -77,12 +77,12 @@ def before_request():
 #
 @app.errorhandler(401)
 def authentication_required(e):
-    flash(gettext('Authentication required.'), 'info')
+    flash('Authentication required.', 'info')
     return redirect(url_for('login'))
 
 @app.errorhandler(403)
 def authentication_failed(e):
-    flash(gettext('Forbidden.'), 'danger')
+    flash('Forbidden.', 'danger')
     return redirect(url_for('home'))
 
 @app.errorhandler(404)

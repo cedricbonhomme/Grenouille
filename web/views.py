@@ -299,6 +299,22 @@ def download_station(station_id):
     r.headers["Content-Disposition"] = 'attachment; filename=measures_station_'+str(station.id)+'.json'
     return r
 
+@app.route('/delete_account/', methods=['GET'])
+@login_required
+def delete_account():
+    """
+    Delete the account of the user (with all its data).
+    """
+    user = User.query.filter(User.email == g.user.email).first()
+    if user is not None:
+        db.session.delete(user)
+        db.session.commit()
+        flash('Your account has been deleted.', 'success')
+    else:
+        flash('This user does not exist.', 'danger')
+    return redirect(url_for('login'))
+
+
 #
 # Views dedicated to administration tasks.
 #

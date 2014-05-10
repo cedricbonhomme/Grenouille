@@ -12,4 +12,5 @@ Flask-Login
 Flask-Principal
 Flask-WTF
 Flask-HTTPAuth
+Flask-Gravatar
 WTForms

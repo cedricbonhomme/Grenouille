@@ -5,10 +5,10 @@ Grenouille
 Presentation
 ============
 
-Grenouille is an online service for weather data.  
+Grenouille is an online service for weather data.
 All data can be obtained in JSON and displayed on a map.
-The Web application is based on Flask and uses PostgreSQL.  
-It can be deployed on Heroku. An example of a client for the Yocto-Meteo sensor 
+The Web application is based on Flask and uses PostgreSQL.
+It can be deployed on Heroku. An example of a client for the Yocto-Meteo sensor
 is provided (inspired from `this code <https://github.com/tarekziade/grenouille/>`_).
 
 The project is divided in two parts:
@@ -24,7 +24,9 @@ Usage
 Deployment
 ----------
 
-This application can be deployed both on Heroku and on a traditional server.
+This application can be deployed on Heroku or on a traditional server.
+
+After installation, you will be able to connect with the email *root@grenouille.localhost* and the password *password*.
 
 Deploying the application on Heroku
 '''''''''''''''''''''''''''''''''''
@@ -35,6 +37,7 @@ Deploying the application on Heroku
     $ cd grenouille
     $ heroku create
     $ heroku addons:add heroku-postgresql:dev
+    $ heroku config:set HEROKU=1
     $ git push heroku master
     $ heroku run init
     $ heroku ps:scale web=1
@@ -46,8 +49,15 @@ Deploying the application on a traditional server
 
     $ git clone https://bitbucket.org/cedricbonhomme/grenouille.git
     $ cd grenouille
-    $ sudo apt-get install postgresql postgresql-server-dev-9.1 postgresql-client
     $ sudo pip install --upgrade -r requirements.txt
+    $ cp conf/conf.cfg-sample conf/conf.cfg
+
+If you want to use PostgreSQL
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: bash
+
+    $ sudo apt-get install postgresql postgresql-server-dev-9.3 postgresql-client
     $ sudo -u postgres createuser
     Enter name of role to add: username
     Shall the new role be a superuser? (y/n) n
@@ -58,15 +68,33 @@ Deploying the application on a traditional server
     postgres=# ALTER USER username WITH ENCRYPTED PASSWORD 'password';
     postgres=# GRANT ALL PRIVILEGES ON DATABASE grenouille TO username;
     postgres=# \q
-    $ export DATABASE_URL="postgres://username:password@127.0.0.1:5432/grenouille"
+
+Edit the configuration file with the line:
+
+.. code:: cfg
+
+    [database]
+    uri = postgres://username:password@127.0.0.1:5433/grenouille
+
+If you want to use SQLite
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Just edit the configuration file with the line:
+
+.. code:: cfg
+
+    [database]
+    uri = sqlite+pysqlite:///grenouille.db
+
+
+Finally:
+
+.. code:: bash
+
     $ python db_create.py
     $ python runserver.py
      * Running on http://0.0.0.0:5000/
      * Restarting with reloader
-
-
-You can connect with the email *root@grenouille.localhost* and the password *root*.
-You should change these information.
 
 
 Web services
@@ -110,32 +138,32 @@ By country:
         "result": [
             {
             "coord": {
-                "lat": 49.115558, 
+                "lat": 49.115558,
                 "lon": 6.175635
-            }, 
-            "country": "FR", 
-            "date": "Sat, 05 Apr 2014 21:17:43 GMT", 
-            "id": 1, 
+            },
+            "country": "FR",
+            "date": "Sat, 05 Apr 2014 21:17:43 GMT",
+            "id": 1,
             "main": {
-                "humidity": 84.0, 
-                "pression": 980.0, 
+                "humidity": 84.0,
+                "pression": 980.0,
                 "temperature": 25.7
-            }, 
+            },
             "name": "Metz"
-            }, 
+            },
             {
             "coord": {
-                "lat": 45.649781, 
+                "lat": 45.649781,
                 "lon": 0.153623
-            }, 
-            "country": "FR", 
-            "date": "Thu, 03 Apr 2014 05:34:00 GMT", 
-            "id": 5, 
+            },
+            "country": "FR",
+            "date": "Thu, 03 Apr 2014 05:34:00 GMT",
+            "id": 5,
             "main": {
-                "humidity": 82.0, 
-                "pression": 980.0, 
+                "humidity": 82.0,
+                "pression": 980.0,
                 "temperature": 23.2
-            }, 
+            },
             "name": "Angoul\u00eame"
             }
         ]

@@ -83,7 +83,7 @@ def authentication_required(e):
 @app.errorhandler(403)
 def authentication_failed(e):
     flash('Forbidden.', 'danger')
-    return redirect(url_for('home'))
+    return redirect(url_for('login'))
 
 @app.errorhandler(404)
 def page_not_found(e):

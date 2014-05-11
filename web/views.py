@@ -314,6 +314,12 @@ def delete_account():
         flash('This user does not exist.', 'danger')
     return redirect(url_for('login'))
 
+@app.route('/about/', methods=['GET'])
+def about():
+    """
+    'About' page.
+    """
+    return render_template('about.html')
 
 #
 # Views dedicated to administration tasks.

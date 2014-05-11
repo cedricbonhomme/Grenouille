@@ -365,7 +365,11 @@ def create_user(user_id=None):
                              pwdhash=generate_password_hash(form.password.data))
                 user.roles.extend([role_user])
                 db.session.add(user)
-                db.session.commit()
+                try:
+                    db.session.commit()
+                except IntegrityError:
+                    flash('Email already used.', 'warning')
+                    return redirect(redirect_url())
                 flash('User "' + user.firstname + '" successfully created.', 'success')
             return redirect("/admin/edit_user/"+str(user.id)+"/")
         else:

@@ -15,6 +15,7 @@
 var stations = [];
 
 $(document).ready(function() {
+    create_map();
     get_stations();
 })
 
@@ -22,25 +23,19 @@ function get_stations() {
     $.ajax({
         type: 'GET',
         url: "/weather.json/",
-        async:false,
+        async: true,
         success: function(data) {
             stations = data["result"];
+            place_stations();
         },
         error: function(XMLHttpRequest, textStatus, errorThrown){
             //document.getElementById("geolocation").innerHTML = XMLHttpRequest.responseText;
         }
     }); // ajax closed
-
-    create_map();
 }
 
 function create_map() {
     var zoom=3;
-    var popupClass, popupContentHTML;
-    AutoSizeAnchoredMinSize = OpenLayers.Class(OpenLayers.Popup.Anchored, {
-    'autoSize': true,
-    'minSize': new OpenLayers.Size(10,10)
-    });
 
     map = new OpenLayers.Map("mapdiv" , {
         units : 'km',
@@ -75,6 +70,16 @@ function create_map() {
 
     stations_location = new OpenLayers.Layer.Markers("Stations");
     map.addLayer(stations_location);
+}
+
+function place_stations()
+{
+    var popupClass, popupContentHTML;
+    AutoSizeAnchoredMinSize = OpenLayers.Class(OpenLayers.Popup.Anchored, {
+    'autoSize': true,
+    'minSize': new OpenLayers.Size(10,10)
+    });
+
     for (station in stations)
     {
         var station_marker = new OpenLayers.LonLat(stations[station]["coord"]["lon"], stations[station]["coord"]["lat"]).transform(

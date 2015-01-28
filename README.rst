@@ -7,14 +7,14 @@ Presentation
 
 Grenouille is an online service for weather data.
 All data can be obtained in JSON and displayed on a map.
-The Web application is based on `Flask <http://flask.pocoo.org/>`_.
+The Web application is based on `Flask <http://flask.pocoo.org>`_.
 
 An example of a client for the Yocto-Meteo sensor
-(connected to a `Raspberry Pi <http://www.raspberrypi.org/>`_)
-is provided (inspired from `this code <https://github.com/tarekziade/grenouille/>`_).
+(connected to a `Raspberry Pi <http://www.raspberrypi.org>`_)
+is provided (inspired from `this code <https://github.com/tarekziade/grenouille>`_).
 Of course you can implement your own client with the API documentation.
 
-The official instance is running `here <https://petite-grenouille.herokuapp.com/>`_.
+The official instance is running `here <https://petite-grenouille.herokuapp.com>`_.
 
 Usage
 =====
@@ -185,4 +185,4 @@ is under the `GNU Affero General Public License version 3 <https://www.gnu.org/l
 Contact
 =======
 
-`My home page <http://cedricbonhomme.org/>`_.
+`My home page <https://www.cedricbonhomme.org>`_.

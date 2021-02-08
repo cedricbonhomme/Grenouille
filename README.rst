@@ -169,12 +169,6 @@ By country:
     }
 
 
-Donation
-========
-
-If you wish and if you like *Grenouille*, you can donate via bitcoin
-`1GVmhR9fbBeEh7rP1qNq76jWArDdDQ3otZ <https://blockexplorer.com/address/1GVmhR9fbBeEh7rP1qNq76jWArDdDQ3otZ>`_.
-Thank you!
 
 License
 =======

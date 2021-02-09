@@ -30,7 +30,9 @@ from web import app, db
 from web.models import User, Station, Measure
 
 from flask.ext.httpauth import HTTPBasicAuth
+
 auth = HTTPBasicAuth()
+
 
 @auth.verify_password
 def verify_password(email, password):
@@ -40,7 +42,8 @@ def verify_password(email, password):
     g.user = user
     return True
 
-@app.route('/users.json/', methods=['GET'])
+
+@app.route("/users.json/", methods=["GET"])
 def users_json():
     """
     This JSON service returns the list of all stations sorted by users.
@@ -49,28 +52,33 @@ def users_json():
     result = []
     for user in users:
         dic = {
-                "user" : user.id,
-                "stations": [ {"name":station.name,
-                               "coord": {
-                                        "alt":station.altitude,
-                                        "lat":station.latitude,
-                                        "lon":station.longitude,
-                                     }
-                               } for station in user.stations]
-            }
+            "user": user.id,
+            "stations": [
+                {
+                    "name": station.name,
+                    "coord": {
+                        "alt": station.altitude,
+                        "lat": station.latitude,
+                        "lon": station.longitude,
+                    },
+                }
+                for station in user.stations
+            ],
+        }
         result.append(dic)
     return jsonify(result=result)
 
-@app.route('/weather.json/', methods=['GET'])
+
+@app.route("/weather.json/", methods=["GET"])
 def weather():
     """
     This JSON service returns the list of all stations
     (with their last measures) when called without argument.
     It is possible to ask for the list of stations of a country.
     """
-    query = request.args.get('q', None)
+    query = request.args.get("q", None)
     if query != None:
-        stations = Station.query.filter(Station.country==query)
+        stations = Station.query.filter(Station.country == query)
     else:
         stations = Station.query.all()
     result = []
@@ -88,24 +96,27 @@ def weather():
             last_measure_temperature = ""
             last_measure_pression = ""
             last_measure_humidity = ""
-        result.append({
-                        "id":station.id,
-                        "name":station.name,
-                        "country":station.country,
-                        "date":last_measure_date,
-                        "coord": {
-                                    "lat":station.latitude,
-                                    "lon":station.longitude,
-                                    },
-                        "main": {
-                                    "temperature":last_measure_temperature,
-                                    "pression":last_measure_pression,
-                                    "humidity":last_measure_humidity
-                                }
-                    })
+        result.append(
+            {
+                "id": station.id,
+                "name": station.name,
+                "country": station.country,
+                "date": last_measure_date,
+                "coord": {
+                    "lat": station.latitude,
+                    "lon": station.longitude,
+                },
+                "main": {
+                    "temperature": last_measure_temperature,
+                    "pression": last_measure_pression,
+                    "humidity": last_measure_humidity,
+                },
+            }
+        )
     return jsonify(result=result)
 
-@app.route('/weather.json/', methods=['POST'])
+
+@app.route("/weather.json/", methods=["POST"])
 @auth.login_required
 def measure_json():
     """
@@ -124,10 +135,12 @@ def measure_json():
         return jsonify(result="UNAUTHORIZED")
     for station in user.stations:
         if station.id == station_id:
-            new_measure = Measure(temperature=request.json["temperature"],
-                                humidity=request.json["humidity"],
-                                pression=request.json["pression"],
-                                station_id=station.id)
+            new_measure = Measure(
+                temperature=request.json["temperature"],
+                humidity=request.json["humidity"],
+                pression=request.json["pression"],
+                station_id=station.id,
+            )
             station.measures.append(new_measure)
             db.session.commit()
             break

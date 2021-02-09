@@ -32,25 +32,34 @@ from werkzeug import generate_password_hash, check_password_hash
 from flask.ext.login import UserMixin
 from web import db
 
+
 class User(db.Model, UserMixin):
     """
     Represent a user.
     """
-    id = db.Column(db.Integer, primary_key = True)
+
+    id = db.Column(db.Integer, primary_key=True)
     firstname = db.Column(db.String(64))
     lastname = db.Column(db.String(64))
-    email = db.Column(db.String(120), index = True, unique = True)
+    email = db.Column(db.String(120), index=True, unique=True)
     pwdhash = db.Column(db.String(120))
-    roles = db.relationship('Role', backref = 'user', lazy = 'dynamic')
+    roles = db.relationship("Role", backref="user", lazy="dynamic")
     date_created = db.Column(db.DateTime(), default=datetime.now)
     last_seen = db.Column(db.DateTime(), default=datetime.now)
-    apikey = db.Column(db.String(86), default = base64.b64encode(hashlib.sha512( str(random.getrandbits(256)) ).digest(),
-                                                                                random.choice(['rA','aZ','gQ','hH','hG','aR','DD'])).rstrip('=='))
-    stations = db.relationship('Station', backref = 'owner', lazy = 'dynamic', cascade='all,delete-orphan')
+    apikey = db.Column(
+        db.String(86),
+        default=base64.b64encode(
+            hashlib.sha512(str(random.getrandbits(256))).digest(),
+            random.choice(["rA", "aZ", "gQ", "hH", "hG", "aR", "DD"]),
+        ).rstrip("=="),
+    )
+    stations = db.relationship(
+        "Station", backref="owner", lazy="dynamic", cascade="all,delete-orphan"
+    )
 
     @staticmethod
     def make_valid_nickname(nickname):
-        return re.sub(ur'[^\w \-]', '', nickname, flags=re.U)
+        return re.sub(ur"[^\w \-]", "", nickname, flags=re.U)
 
     def get_id(self):
         """
@@ -80,33 +89,40 @@ class User(db.Model, UserMixin):
         return self.id == other.id
 
     def __repr__(self):
-        return '<User %r>' % (self.firstname)
+        return "<User %r>" % (self.firstname)
+
 
 class Role(db.Model):
     """
     Represent a role.
     """
-    id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String(10), unique = True)
 
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(10), unique=True)
+
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+
 
 class Station(db.Model):
     """
     Represent a station.
     """
-    id = db.Column(db.Integer, primary_key = True)
+
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), default="New station")
     country = db.Column(db.String(64), default="FR")
     altitude = db.Column(db.Float())
     latitude = db.Column(db.Float())
     longitude = db.Column(db.Float())
-    measures = db.relationship('Measure', backref = 'station', lazy = 'dynamic', cascade='all,delete-orphan')
+    measures = db.relationship(
+        "Measure", backref="station", lazy="dynamic", cascade="all,delete-orphan"
+    )
 
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
     def __repr__(self):
-        return '<Station %r>' % (self.name)
+        return "<Station %r>" % (self.name)
+
 
 class Measure(db.Model):
     """
@@ -117,17 +133,22 @@ class Measure(db.Model):
     - humidity: percent;
     - wind: m/s.
     """
-    id = db.Column(db.Integer, primary_key = True)
+
+    id = db.Column(db.Integer, primary_key=True)
     temperature = db.Column(db.Float())
     pression = db.Column(db.Float())
     humidity = db.Column(db.Float())
     wind = db.Column(db.Float())
     date = db.Column(db.DateTime(), default=datetime.now)
 
-    station_id = db.Column(db.Integer, db.ForeignKey('station.id'))
+    station_id = db.Column(db.Integer, db.ForeignKey("station.id"))
 
     def __repr__(self):
-        return json.dumps({"temperature": self.temperature,
+        return json.dumps(
+            {
+                "temperature": self.temperature,
                 "pression": self.pression,
                 "humidity": self.humidity,
-                "date": str(self.date)})
+                "date": str(self.date),
+            }
+        )

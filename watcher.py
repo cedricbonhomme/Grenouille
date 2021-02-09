@@ -1,5 +1,5 @@
 #! /usr/bin/env python
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 # Grenouille - An online service for weather data.
 # Copyright (C) 2014 Cédric Bonhomme - http://cedricbonhomme.org/
@@ -31,9 +31,9 @@ def watch_station(delay=3600, verbose=True, loop=False):
     station = Station()
 
     def _get_data():
-        data = {'date': datetime.now()}
+        data = {"date": datetime.now()}
         for sensor, value, fmt_value in station.get_info():
-            data[sensor.split('.')[-1]] = value
+            data[sensor.split(".")[-1]] = value
 
         if verbose:
             print data
@@ -48,26 +48,36 @@ def watch_station(delay=3600, verbose=True, loop=False):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Grenouille watcher.')
+    parser = argparse.ArgumentParser(description="Grenouille watcher.")
 
-    parser.add_argument('--version', action='store_true', default=False,
-                        help='Displays version and exits.')
+    parser.add_argument(
+        "--version",
+        action="store_true",
+        default=False,
+        help="Displays version and exits.",
+    )
 
-    parser.add_argument('-d', '--delay',
-                        help='Delay in seconds between two calls.',
-                        type=int, default=3600.)
+    parser.add_argument(
+        "-d",
+        "--delay",
+        help="Delay in seconds between two calls.",
+        type=int,
+        default=3600.0,
+    )
 
-    parser.add_argument('-v', '--verbose', action='store_true',
-                        help='Verbose', default=False)
+    parser.add_argument(
+        "-v", "--verbose", action="store_true", help="Verbose", default=False
+    )
 
-    parser.add_argument('-l', '--loop', action='store_true',
-                        help='Loop forever', default=False)
+    parser.add_argument(
+        "-l", "--loop", action="store_true", help="Loop forever", default=False
+    )
 
     args = parser.parse_args()
 
     if args.version:
         yocto = YAPI.GetAPIVersion()
-        print('Grenouille v%s - Yoctopuce v%s' % (__version__, yocto))
+        print ("Grenouille v%s - Yoctopuce v%s" % (__version__, yocto))
         sys.exit(0)
 
     try:
@@ -75,8 +85,8 @@ def main():
     except KeyboardInterrupt:
         pass
 
-    logger.info('Bye!')
+    logger.info("Bye!")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

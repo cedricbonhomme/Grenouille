@@ -1,12 +1,12 @@
 #! /usr/bin/env python
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from yoctopuce.yocto_api import YAPI, YModule, YRefParam
 from yoctopuce.yocto_humidity import YHumidity
 from yoctopuce.yocto_temperature import YTemperature
 from yoctopuce.yocto_pressure import YPressure
 
-APACH = 200.
+APACH = 200.0
 
 
 def convert_pressure(value, altitude=APACH):
@@ -16,7 +16,6 @@ def convert_pressure(value, altitude=APACH):
 
 
 class Station(object):
-
     def __init__(self, target=None):
         errmsg = YRefParam()
 
@@ -29,28 +28,30 @@ class Station(object):
         else:
             sensor = YHumidity.FirstHumidity()
             if sensor is None:
-                raise IOError('No module connected')
+                raise IOError("No module connected")
             self._module = sensor.get_module()
             self.target = target = self._module.get_serialNumber()
 
-        self._sensors = [YHumidity.FindHumidity(target+'.humidity'),
-                         YPressure.FindPressure(target+'.pressure'),
-                         YTemperature.FindTemperature(target+'.temperature')]
+        self._sensors = [
+            YHumidity.FindHumidity(target + ".humidity"),
+            YPressure.FindPressure(target + ".pressure"),
+            YTemperature.FindTemperature(target + ".temperature"),
+        ]
 
     def _format_value(self, sensor):
         value = sensor.get_currentValue()
         name = sensor.get_friendlyName()
 
         if isinstance(sensor, YHumidity):
-            return name, value, u'%4.0f%%' % value
+            return name, value, u"%4.0f%%" % value
         elif isinstance(sensor, YPressure):
             value = convert_pressure(value)
-            return name, value, u'%4.0fmb' % value
+            return name, value, u"%4.0fmb" % value
         else:
-            return name, value, u'%2.1fºC' % value
+            return name, value, u"%2.1fºC" % value
 
     def get_info(self, formatted=False):
         if not self._module.isOnline():
-            raise IOError('Device not connected')
+            raise IOError("Device not connected")
 
         return [self._format_value(sensor) for sensor in self._sensors]

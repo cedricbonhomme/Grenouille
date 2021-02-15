@@ -32,7 +32,7 @@ Deploying the application on Heroku
 
 .. code:: bash
 
-    $ git clone https://bitbucket.org/cedricbonhomme/grenouille.git
+    $ git clone https://github.com/cedricbonhomme/Grenouille
     $ cd grenouille
     $ heroku create
     $ heroku addons:add heroku-postgresql:dev
@@ -46,7 +46,7 @@ Deploying the application on a traditional server
 
 .. code:: bash
 
-    $ git clone https://bitbucket.org/cedricbonhomme/grenouille.git
+    $ git clone https://github.com/cedricbonhomme/Grenouille
     $ cd grenouille
     $ sudo pip install --upgrade -r requirements.txt
     $ cp conf/conf.cfg-sample conf/conf.cfg
@@ -173,8 +173,9 @@ By country:
 License
 =======
 
-`Grenouille <https://bitbucket.org/cedricbonhomme/grenouille>`_
+`Grenouille <https://github.com/cedricbonhomme/Grenouille>`_
 is under the `GNU Affero General Public License version 3 <https://www.gnu.org/licenses/agpl-3.0.html>`_.
+
 
 Contact
 =======

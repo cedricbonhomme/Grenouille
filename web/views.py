@@ -38,7 +38,7 @@ from flask import (
     current_app,
     make_response,
 )
-from flask.ext.login import (
+from flask_login import (
     LoginManager,
     login_user,
     logout_user,
@@ -46,7 +46,7 @@ from flask.ext.login import (
     current_user,
     AnonymousUserMixin,
 )
-from flask.ext.principal import (
+from flask_principal import (
     Principal,
     Identity,
     AnonymousIdentity,
@@ -60,8 +60,8 @@ from sqlalchemy.exc import IntegrityError
 
 from web import app, db
 from web.models import User, Station, Role
-from forms import SignupForm, SigninForm, ProfileForm, StationForm
-from werkzeug import generate_password_hash
+from web.forms import SignupForm, SigninForm, ProfileForm, StationForm
+from werkzeug.security import generate_password_hash
 
 import logging
 

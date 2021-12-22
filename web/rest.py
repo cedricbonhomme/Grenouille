@@ -25,11 +25,11 @@ __copyright__ = "Copyright (c) Cedric Bonhomme"
 __license__ = "AGPLv3"
 
 from flask import g, jsonify, request
-from flask.ext.login import login_required
+from flask_login import login_required
 from web import app, db
 from web.models import User, Station, Measure
 
-from flask.ext.httpauth import HTTPBasicAuth
+from flask_httpauth import HTTPBasicAuth
 
 auth = HTTPBasicAuth()
 

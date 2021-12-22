@@ -26,19 +26,23 @@ __license__ = "AGPLv3"
 
 import os
 from flask import Flask
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.gravatar import Gravatar
+from flask_sqlalchemy import SQLAlchemy
+from flask_gravatar import Gravatar
 
-import config
+from web.config import (
+    SQLALCHEMY_DATABASE_URI,
+    RECAPTCHA_PUBLIC_KEY,
+    RECAPTCHA_PRIVATE_KEY,
+)
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.urandom(12)
-app.config["SQLALCHEMY_DATABASE_URI"] = config.SQLALCHEMY_DATABASE_URI
+app.config["SQLALCHEMY_DATABASE_URI"] = SQLALCHEMY_DATABASE_URI
 db = SQLAlchemy(app)
 
 app.config["RECAPTCHA_USE_SSL"] = True
-app.config["RECAPTCHA_PUBLIC_KEY"] = config.RECAPTCHA_PUBLIC_KEY
-app.config["RECAPTCHA_PRIVATE_KEY"] = config.RECAPTCHA_PRIVATE_KEY
+app.config["RECAPTCHA_PUBLIC_KEY"] = RECAPTCHA_PUBLIC_KEY
+app.config["RECAPTCHA_PRIVATE_KEY"] = RECAPTCHA_PRIVATE_KEY
 
 # Gravatar
 gravatar = Gravatar(

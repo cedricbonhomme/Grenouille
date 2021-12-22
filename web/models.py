@@ -26,11 +26,16 @@ __license__ = "AGPLv3"
 
 import re
 import json
+import secrets
 import random, base64, hashlib
 from datetime import datetime
-from werkzeug import generate_password_hash, check_password_hash
-from flask.ext.login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import UserMixin
 from web import db
+
+
+def generate_token():
+    return secrets.token_urlsafe(64)
 
 
 class User(db.Model, UserMixin):
@@ -46,20 +51,14 @@ class User(db.Model, UserMixin):
     roles = db.relationship("Role", backref="user", lazy="dynamic")
     date_created = db.Column(db.DateTime(), default=datetime.now)
     last_seen = db.Column(db.DateTime(), default=datetime.now)
-    apikey = db.Column(
-        db.String(86),
-        default=base64.b64encode(
-            hashlib.sha512(str(random.getrandbits(256))).digest(),
-            random.choice(["rA", "aZ", "gQ", "hH", "hG", "aR", "DD"]),
-        ).rstrip("=="),
-    )
+    apikey = db.Column(db.String(86), default=generate_token, unique=True)
     stations = db.relationship(
         "Station", backref="owner", lazy="dynamic", cascade="all,delete-orphan"
     )
 
     @staticmethod
     def make_valid_nickname(nickname):
-        return re.sub(ur"[^\w \-]", "", nickname, flags=re.U)
+        return re.sub("[^a-zA-Z0-9_-]", "", nickname, flags=re.U)
 
     def get_id(self):
         """

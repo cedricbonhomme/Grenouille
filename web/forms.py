@@ -25,18 +25,18 @@ __copyright__ = "Copyright (c) Cedric Bonhomme"
 __license__ = "AGPLv3"
 
 from flask import flash
-from flask.ext.wtf import Form
+from flask_wtf import Form
 from wtforms import (
-    TextField,
+    StringField,
     TextAreaField,
     SelectField,
     PasswordField,
     SubmitField,
     validators,
+    EmailField,
 )
-from flask.ext.wtf.html5 import EmailField
-from flask_wtf import RecaptchaField
 
+from flask_wtf import RecaptchaField
 from web.models import User
 
 import logging
@@ -46,23 +46,23 @@ import pycountry
 
 
 class SignupForm(Form):
-    firstname = TextField(
-        "First name", [validators.Required("Please enter your first name.")]
+    firstname = StringField(
+        "First name", [validators.InputRequired("Please enter your first name.")]
     )
-    lastname = TextField(
-        "Last name", [validators.Required("Please enter your last name.")]
+    lastname = StringField(
+        "Last name", [validators.InputRequired("Please enter your last name.")]
     )
     email = EmailField(
         "Email",
         [
             validators.Length(min=6, max=35),
-            validators.Required("Please enter your email."),
+            validators.InputRequired("Please enter your email."),
         ],
     )
     password = PasswordField(
         "Password",
         [
-            validators.Required("Please enter a password."),
+            validators.InputRequired("Please enter a password."),
             validators.Length(min=6, max=100),
         ],
     )
@@ -93,15 +93,15 @@ class SigninForm(Form):
     Sign in form.
     """
 
-    email = TextField(
+    email = StringField(
         "Email",
         [
-            validators.Required("Please enter your email address."),
+            validators.InputRequired("Please enter your email address."),
             validators.Email("Please enter your email address."),
         ],
     )
     password = PasswordField(
-        "Password", [validators.Required("Please enter a password.")]
+        "Password", [validators.InputRequired("Please enter a password.")]
     )
     submit = SubmitField("Log In")
 
@@ -126,13 +126,13 @@ class ProfileForm(Form):
     Profile form.
     """
 
-    firstname = TextField(
-        "First name", [validators.Required("Please enter your first name.")]
+    firstname = StringField(
+        "First name", [validators.InputRequired("Please enter your first name.")]
     )
-    lastname = TextField(
-        "Last name", [validators.Required("Please enter your last name.")]
+    lastname = StringField(
+        "Last name", [validators.InputRequired("Please enter your last name.")]
     )
-    email = TextField("Email", [validators.Required("Please enter your email.")])
+    email = StringField("Email", [validators.InputRequired("Please enter your email.")])
     password = PasswordField("Password")
     submit = SubmitField("Save")
 
@@ -150,17 +150,17 @@ class StationForm(Form):
     Station form.
     """
 
-    name = TextField("Name", [validators.Required("Please enter a name.")])
+    name = StringField("Name", [validators.InputRequired("Please enter a name.")])
     country = SelectField(
         u"Country",
         choices=[
-            (country.alpha2, country.name) for country in list(pycountry.countries)
+            (country.alpha_2, country.name) for country in list(pycountry.countries)
         ],
     )
-    altitude = TextField("Altitude", [validators.Required("Please enter an altitude.")])
-    latitude = TextField("Latitude", [validators.Required("Please enter a latitude.")])
-    longitude = TextField(
-        "Longitude", [validators.Required("Please enter a longitude.")]
+    altitude = StringField("Altitude", [validators.InputRequired("Please enter an altitude.")])
+    latitude = StringField("Latitude", [validators.InputRequired("Please enter a latitude.")])
+    longitude = StringField(
+        "Longitude", [validators.InputRequired("Please enter a longitude.")]
     )
     submit = SubmitField("Save")
 

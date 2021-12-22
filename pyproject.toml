@@ -15,9 +15,11 @@ Flask-Login = "^0.5.0"
 Flask-Principal = "^0.4.0"
 Flask-SQLAlchemy = "^2.5.1"
 Flask-WTF = "^1.0.0"
+
 psycopg2-binary = "^2.9.2"
 pycountry = "^20.7.3"
 requests = "^2.26.0"
+WTForms = {extras = ["email"], version = "^3.0.0"}
 
 [tool.poetry.dev-dependencies]
 

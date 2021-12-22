@@ -48,7 +48,7 @@ Deploying the application on a traditional server
 
     $ git clone https://github.com/cedricbonhomme/Grenouille
     $ cd grenouille
-    $ sudo pip install --upgrade -r requirements.txt
+    $ poetry install
     $ cp conf/conf.cfg-sample conf/conf.cfg
 
 If you want to use PostgreSQL
@@ -90,6 +90,7 @@ Finally:
 
 .. code:: bash
 
+    $ poetry shell
     $ python db_create.py
     $ python runserver.py
      * Running on http://0.0.0.0:5000/

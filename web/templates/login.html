@@ -16,7 +16,7 @@
         {% endfor %}
 
         <form action="{{ url_for('login') }}" method=post>
-            {{ form.hidden_tag() }}
+            {{ form.csrf_token }}
 
             <div class="form-group">
             {{ form.email(class_="form-control", placeholder="Your email") }}

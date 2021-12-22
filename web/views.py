@@ -97,7 +97,7 @@ def on_identity_loaded(sender, identity):
 @app.before_request
 def before_request():
     g.user = current_user
-    if g.user.is_authenticated():
+    if g.user.is_authenticated:
         g.user.last_seen = datetime.utcnow()
         db.session.add(g.user)
         db.session.commit()
@@ -149,7 +149,7 @@ def login():
     g.user = AnonymousUserMixin()
     form = SigninForm()
 
-    if form.validate_on_submit():
+    if form.validate():
         user = User.query.filter(User.email == form.email.data).first()
         login_user(user)
         g.user = user
@@ -195,7 +195,7 @@ def signup():
     """
     form = SignupForm()
 
-    if form.validate_on_submit():
+    if form.validate():
         role_user = Role.query.filter(Role.name == "user").first()
         user = User(
             firstname=form.firstname.data,

@@ -3,7 +3,7 @@
 <div class="container">
     <div class="jumbotron">
         <form action="" method="post" name="save">
-            {{ form.hidden_tag() }}
+            {{ form.csrf_token }}
 
             {{ form.firstname.label }}
             {{ form.firstname(class_="form-control") }} {% for error in form.firstname.errors %} <span style="color: red;">{{ error }}<br /></span>{% endfor %}

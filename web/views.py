@@ -256,7 +256,7 @@ def station(station_id=None):
     Edit the information about a station.
     """
     station = Station.query.filter(Station.id == station_id).first()
-    country = pycountry.countries.get(alpha2=station.country).official_name
+    country = pycountry.countries.get(alpha_2=station.country).official_name
     return render_template("station.html", station=station, country=country)
 
 

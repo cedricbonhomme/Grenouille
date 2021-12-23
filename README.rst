@@ -73,7 +73,7 @@ Edit the configuration file with the line:
 .. code:: cfg
 
     [database]
-    uri = postgres://username:password@127.0.0.1:5433/grenouille
+    uri = postgresql://username:password@127.0.0.1:5433/grenouille
 
 If you want to use SQLite
 ~~~~~~~~~~~~~~~~~~~~~~~~~
